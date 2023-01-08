@@ -8,8 +8,8 @@ import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
  */
 export const GreetingFunctionDefinition = DefineFunction({
   callback_id: "greeting_function",
-  title: "Generate a greeting",
-  description: "Generate a greeting",
+  title: "Impromptu Networking",
+  description: "Impromptu Networking",
   source_file: "functions/greeting_function.ts",
   input_parameters: {
     properties: {
@@ -34,7 +34,7 @@ export const GreetingFunctionDefinition = DefineFunction({
 export default SlackFunction(
   GreetingFunctionDefinition,
   ({ inputs }) => {
-    const { prompt } = inputs;
-    return { outputs: { prompt } };
+      const prompt = `Let's do some impromptu networking!  React to this prompt to join in.\n\n> ${inputs.prompt}`;
+      return { outputs: {prompt} };
   },
 );

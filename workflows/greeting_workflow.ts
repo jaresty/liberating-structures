@@ -8,8 +8,8 @@ import { GreetingFunctionDefinition } from "../functions/greeting_function.ts";
  */
 const GreetingWorkflow = DefineWorkflow({
   callback_id: "greeting_workflow",
-  title: "Send a greeting",
-  description: "Send a greeting to channel",
+  title: "Impromptu Networking",
+  description: "Start Impromptu Networking",
   input_parameters: {
     properties: {
       interactivity: {
