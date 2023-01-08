@@ -16,7 +16,7 @@ const greetingTrigger: Trigger<typeof GreetingWorkflow.definition> = {
     interactivity: {
       value: "{{data.interactivity}}",
     },
-    channel: {
+    channel_id: {
       value: "{{data.channel_id}}",
     },
   },

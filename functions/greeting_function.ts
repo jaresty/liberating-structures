@@ -34,7 +34,7 @@ export const GreetingFunctionDefinition = DefineFunction({
 export default SlackFunction(
   GreetingFunctionDefinition,
   ({ inputs }) => {
-      const prompt = `Let's do some impromptu networking!  React to this prompt to join in.\n\n> ${inputs.prompt}`;
+      const prompt = `Let's do some impromptu networking!  React to this prompt within the next 1 minute to join. The prompt we will use is this.\n\n> ${inputs.prompt}`;
       return { outputs: {prompt} };
   },
 );

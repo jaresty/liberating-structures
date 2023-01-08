@@ -1,4 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
+import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { GreetingFunctionDefinition } from "../functions/greeting_function.ts";
 
 /**
@@ -15,7 +16,7 @@ const GreetingWorkflow = DefineWorkflow({
       interactivity: {
         type: Schema.slack.types.interactivity,
       },
-      channel: {
+      channel_id: {
         type: Schema.slack.types.channel_id,
       },
     },
@@ -52,9 +53,27 @@ const greetingFunctionStep = GreetingWorkflow.addStep(
   },
 );
 
-GreetingWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: GreetingWorkflow.inputs.channel,
+const sendMessageStep = GreetingWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: GreetingWorkflow.inputs.channel_id,
   message: greetingFunctionStep.outputs.prompt,
 });
+
+const waitForReactions = GreetingWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: 1,
+    }
+)
+
+const getReactorsStep = GreetingWorkflow.addStep(
+    GetReactorsDefinition, {
+    channel_id: GreetingWorkflow.inputs.channel_id,
+    timestamp: sendMessageStep.outputs.message_ts,
+});
+
+const sendReactions = GreetingWorkflow.addStep(MatchUsers, {
+    channel_id: GreetingWorkflow.inputs.channel_id,
+    participants: getReactorsStep.outputs.users,
+})
 
 export default GreetingWorkflow;
