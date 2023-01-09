@@ -36,7 +36,7 @@ export default SlackFunction(
     GetReactorsDefinition,
     async ({ inputs, client }) => {
         console.log(inputs);
-        const response = await client.reactions.get({ channel: inputs.channel_id, timestamp: inputs.timestamp })
+        const response = await client.reactions.get({ channel: inputs.channel_id, timestamp: inputs.timestamp, full: true })
         console.log(response);
         // Create a Set to store the unique user IDs
         const userSet = new Set<string>();
