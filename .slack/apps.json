@@ -1,1 +1,11 @@
-{}
+{
+  "apps": {
+    "thisisartium": {
+      "name": "thisisartium",
+      "app_id": "A04J3RNKP0B",
+      "team_id": "TK7M6MUN8",
+      "IsDev": false
+    }
+  },
+  "default": "thisisartium"
+}

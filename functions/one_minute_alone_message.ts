@@ -37,7 +37,7 @@ export default SlackFunction(
   OneTwoFourOneMinuteAlone,
   ({ inputs, client }) => {
       console.log(inputs);
-      inputs.participants.forEach((user: string) => {
+      (inputs.participants || []).forEach((user: string) => {
           console.log("Sending message to " + user);
           client.chat.postMessage({
               channel: user,

@@ -27,7 +27,7 @@ export const GreetingFunctionDefinition = DefineFunction({
         description: "Prompt for networking session",
       },
     },
-    required: ["greeting"],
+    required: ["prompt"],
   },
 });
 
