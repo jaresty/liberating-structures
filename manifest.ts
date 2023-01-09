@@ -1,6 +1,7 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "./functions/get_reactors.ts";
 import { GreetingFunctionDefinition } from "./functions/greeting_function.ts";
+import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import GreetingWorkflow from "./workflows/greeting_workflow.ts";
 
 /**
@@ -9,11 +10,11 @@ import GreetingWorkflow from "./workflows/greeting_workflow.ts";
  * https://api.slack.com/future/manifest
  */
 export default Manifest({
-  name: "impromptu-network",
+  name: "liberating-structures",
   description:
-    "A sample that demonstrates using a function, workflow and trigger to send a greeting",
+    "A simple liberating structures bot for collaboration",
   icon: "assets/default_new_app_icon.png",
-  workflows: [GreetingWorkflow],
+    workflows: [GreetingWorkflow, OneTwoFourWorkflow],
     functions: [GetReactorsDefinition, GreetingFunctionDefinition],
   outgoingDomains: [],
   botScopes: [
