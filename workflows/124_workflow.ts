@@ -91,17 +91,17 @@ const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 })
 
 OneTwoFourWorkflow.addStep(
+    InviteUsersToHuddleDefinition, {
+    matches: pairUsers.outputs.matches,
+    prompt: inputForm.outputs.fields.prompt,
+})
+
+OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
         minutes_to_delay: 2,
     }
 )
-
-OneTwoFourWorkflow.addStep(
-    InviteUsersToHuddleDefinition, {
-    matches: pairUsers.outputs.matches,
-    prompt: inputForm.outputs.fields.prompt,
-})
 
 const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
     users: pairUsers.outputs.matches,
