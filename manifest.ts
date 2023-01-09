@@ -16,5 +16,13 @@ export default Manifest({
   workflows: [GreetingWorkflow],
     functions: [GetReactorsDefinition, GreetingFunctionDefinition],
   outgoingDomains: [],
-  botScopes: ["commands", "chat:write", "chat:write.public", "reactions:read"],
+  botScopes: [
+      "commands",
+      "chat:write",
+      "chat:write.public",
+      "reactions:read",
+      "groups:write",
+      "mpim:write",
+      "im:write",
+  ],
 });

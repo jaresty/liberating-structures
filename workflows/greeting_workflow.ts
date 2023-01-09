@@ -1,6 +1,8 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { GreetingFunctionDefinition } from "../functions/greeting_function.ts";
+import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
+import { MatchUsersDefinition } from "../functions/match_users.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -41,7 +43,13 @@ const inputForm = GreetingWorkflow.addStep(
         title: "Prompt",
         type: Schema.types.string,
       }],
-      required: ["prompt"],
+      // {
+      //     name: "rounds",
+      //     title: "Number of rounds",
+      //     type: Schema.types.number,
+      //     default: 1,
+      // }],
+      required: ["prompt"], // , "rounds"],
     },
   },
 );
@@ -71,9 +79,16 @@ const getReactorsStep = GreetingWorkflow.addStep(
     timestamp: sendMessageStep.outputs.message_ts,
 });
 
-const sendReactions = GreetingWorkflow.addStep(MatchUsers, {
-    channel_id: GreetingWorkflow.inputs.channel_id,
-    participants: getReactorsStep.outputs.users,
+const matchUsers = GreetingWorkflow.addStep(MatchUsersDefinition, {
+    users: getReactorsStep.outputs.users,
+    // users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
 })
+
+const inviteUsersToHuddlesStep = GreetingWorkflow.addStep(
+    InviteUsersToHuddleDefinition, {
+        matches: matchUsers.outputs.matches,
+        prompt: inputForm.outputs.fields.prompt,
+    }
+)
 
 export default GreetingWorkflow;
