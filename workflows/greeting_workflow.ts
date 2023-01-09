@@ -43,13 +43,7 @@ const inputForm = GreetingWorkflow.addStep(
         title: "Prompt",
         type: Schema.types.string,
       }],
-      // {
-      //     name: "rounds",
-      //     title: "Number of rounds",
-      //     type: Schema.types.number,
-      //     default: 1,
-      // }],
-      required: ["prompt"], // , "rounds"],
+      required: ["prompt"],
     },
   },
 );
@@ -66,7 +60,7 @@ const sendMessageStep = GreetingWorkflow.addStep(Schema.slack.functions.SendMess
   message: greetingFunctionStep.outputs.prompt,
 });
 
-const waitForReactions = GreetingWorkflow.addStep(
+GreetingWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
         minutes_to_delay: 1,
@@ -79,16 +73,27 @@ const getReactorsStep = GreetingWorkflow.addStep(
     timestamp: sendMessageStep.outputs.message_ts,
 });
 
-const matchUsers = GreetingWorkflow.addStep(MatchUsersDefinition, {
-    users: getReactorsStep.outputs.users,
-    // users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
-})
+for(let i=0;i < 3; i++) {
+    let matchUsers = GreetingWorkflow.addStep(MatchUsersDefinition, {
+        users: getReactorsStep.outputs.users,
+        // users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
+    })
 
-const inviteUsersToHuddlesStep = GreetingWorkflow.addStep(
-    InviteUsersToHuddleDefinition, {
+    GreetingWorkflow.addStep(
+        InviteUsersToHuddleDefinition, {
         matches: matchUsers.outputs.matches,
         prompt: inputForm.outputs.fields.prompt,
+    })
+
+    if(i < 2) {
+        GreetingWorkflow.addStep(
+            Schema.slack.functions.Delay,
+            {
+                minutes_to_delay: 3,
+            }
+        )
     }
-)
+}
+
 
 export default GreetingWorkflow;
