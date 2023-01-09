@@ -42,6 +42,7 @@ const inputForm = GreetingWorkflow.addStep(
         name: "prompt",
         title: "Prompt",
         type: Schema.types.string,
+        default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
       }],
       required: ["prompt"],
     },
