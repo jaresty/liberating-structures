@@ -76,7 +76,7 @@ const getReactorsStep = OneTwoFourWorkflow.addStep(
 
 const oneMinuteAloneStep = OneTwoFourWorkflow.addStep(OneTwoFourOneMinuteAlone, {
     prompt: inputForm.outputs.fields.prompt,
-    users: getReactorsStep.outputs.users,
+    participants: getReactorsStep.outputs.users,
 })
 
 OneTwoFourWorkflow.addStep(
