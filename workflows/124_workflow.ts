@@ -1,0 +1,129 @@
+import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
+import { GetReactorsDefinition } from "../functions/get_reactors.ts";
+import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
+import { MatchUsersDefinition } from "../functions/match_users.ts";
+import { OneTwoFourOneMinuteAlone } from "../functions/one_minute_alone_message.ts";
+import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_introduction.ts";
+
+/**
+ * A Workflow is a set of steps that are executed in order.
+ * Each step in a Workflow is a function.
+ * https://api.slack.com/future/workflows
+ */
+const OneTwoFourWorkflow = DefineWorkflow({
+  callback_id: "onetwofour_workflow",
+  title: "124 Workflow",
+  description: "Start 1-2-4",
+  input_parameters: {
+    properties: {
+      interactivity: {
+        type: Schema.slack.types.interactivity,
+      },
+      channel_id: {
+        type: Schema.slack.types.channel_id,
+      },
+    },
+    required: ["interactivity"],
+  },
+});
+
+/**
+ * For collecting input from users, we recommend the
+ * built-in OpenForm function as a first step.
+ * https://api.slack.com/future/functions#open-a-form
+ */
+const inputForm = OneTwoFourWorkflow.addStep(
+  Schema.slack.functions.OpenForm,
+  {
+    title: "Start 1-2-4",
+    interactivity: OneTwoFourWorkflow.inputs.interactivity,
+    submit_label: "Start 1-2-4",
+    fields: {
+      elements: [{
+        name: "prompt",
+        title: "Prompt",
+        type: Schema.types.string,
+      }],
+      required: ["prompt"],
+    },
+  },
+);
+
+const greetingFunctionStep = OneTwoFourWorkflow.addStep(
+  OneTwoFourIntroductionDefinition,
+  {
+    prompt: inputForm.outputs.fields.prompt,
+  },
+);
+
+const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  message: greetingFunctionStep.outputs.prompt,
+});
+
+OneTwoFourWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: 1,
+    }
+)
+
+const getReactorsStep = OneTwoFourWorkflow.addStep(
+    GetReactorsDefinition, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    timestamp: sendMessageStep.outputs.message_ts,
+});
+
+const oneMinuteAloneStep = OneTwoFourWorkflow.addStep(OneTwoFourOneMinuteAlone, {
+    prompt: inputForm.outputs.fields.prompt,
+    users: getReactorsStep.outputs.users,
+})
+
+OneTwoFourWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: 1,
+    }
+)
+
+const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
+    users: getReactorsStep.outputs.users,
+})
+
+OneTwoFourWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: 2,
+    }
+)
+
+OneTwoFourWorkflow.addStep(
+    InviteUsersToHuddleDefinition, {
+    matches: pairUsers.outputs.matches,
+    prompt: inputForm.outputs.fields.prompt,
+})
+
+const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
+    users: pairUsers.outputs.matches,
+})
+
+OneTwoFourWorkflow.addStep(
+    InviteUsersToHuddleDefinition, {
+    matches: groupUsers.outputs.matches,
+    prompt: inputForm.outputs.fields.prompt,
+})
+
+OneTwoFourWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: 4,
+    }
+)
+
+OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    thread_ts: sendMessageStep.outputs.message_ts, 
+    message: "@here 1-2-4 Exercise Complete.  Please share any takeaways here.",
+});
+
+export default OneTwoFourWorkflow;
