@@ -82,6 +82,7 @@ for(let i=0;i < 3; i++) {
 
     GreetingWorkflow.addStep(
         InviteUsersToHuddleDefinition, {
+        channel_id: GreetingWorkflow.inputs.channel_id,
         matches: matchUsers.outputs.matches,
         prompt: inputForm.outputs.fields.prompt,
     })

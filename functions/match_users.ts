@@ -41,6 +41,8 @@ export default SlackFunction(
 
         // Step 3
         inputs.users.sort(() => Math.random() - 0.5);
+        console.log("Matching users")
+        console.log(inputs.users)
 
         // Step 4
         let i = 0;
@@ -54,10 +56,12 @@ export default SlackFunction(
         }
         while (i < inputs.users.length) {
             matches.push([users[i], users[i + 1]]);
-            console.log(matches);
             i += 2;
         }
         const result = {matches: matches.map((items) => items.join(','))};
+
+        console.log("result")
+        console.log(result)
 
         return { outputs: result };
     },

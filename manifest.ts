@@ -25,5 +25,6 @@ export default Manifest({
       "groups:write",
       "mpim:write",
       "im:write",
+      "users:read",
   ],
 });

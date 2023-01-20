@@ -8,6 +8,10 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
     source_file: "functions/invite_users_to_huddle.ts",
     input_parameters: {
         properties: {
+            channel_id: {
+                type: Schema.slack.types.channel_id,
+                description: "the channel to invite in"
+            },
             matches: {
                 type: Schema.types.array,
                 items: {
@@ -20,7 +24,7 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
                 description: "Prompt to send",
             }
         },
-        required: ["matches"],
+        required: ["matches", "channel_id"],
     },
     output_parameters: {
         properties: {},
@@ -30,24 +34,22 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
 
 export default SlackFunction(
     InviteUsersToHuddleDefinition,
-    async ({ inputs, client, team_id }) => {
-        console.log(inputs);
+    async ({ inputs, client }) => {
         inputs.matches.forEach(async (userIds: string) => {
-            const conversation = await client.conversations.open({
-                users: userIds
-            })
-            console.log(conversation);
-            // Get the conversation ID of the huddle
-            const conversationId = conversation.channel.id;
-            client.chat.postMessage({
-                channel: conversation.channel.id,
-                text: 'Hey there! You are invited to join this huddle: ' +
+            const userNames = await Promise.all(userIds.split(',').map(async (userId) => {
+                const result = await client.users.info({user: userId})
+                return `<@${result.user.name}>`
+            }))
+            const usersToNotify = userNames.join(' ')
+            const postMessageResponse = client.chat.postMessage({
+                channel: inputs.channel_id,
+                text: `Hey there ${usersToNotify}! You are invited to join a huddle in this thread.: ` +
                     '. We will be discussing this prompt:\n\n' +
                     `> ${inputs.prompt}\n\n` +
-                    'Just click the "huddle" to icon to join.'
+                    'Click "Start Huddle in Thread" under the menu to the right on this message to join.'
             });
         });
 
-        return { outputs: {} };
+        return { outputs: {prompt} };
     },
 );

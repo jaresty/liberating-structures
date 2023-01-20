@@ -2,7 +2,6 @@ import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
-import { OneTwoFourOneMinuteAlone } from "../functions/one_minute_alone_message.ts";
 import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_introduction.ts";
 
 /**
@@ -74,24 +73,13 @@ const getReactorsStep = OneTwoFourWorkflow.addStep(
     timestamp: sendMessageStep.outputs.message_ts,
 });
 
-const oneMinuteAloneStep = OneTwoFourWorkflow.addStep(OneTwoFourOneMinuteAlone, {
-    prompt: inputForm.outputs.fields.prompt,
-    participants: getReactorsStep.outputs.users,
-})
-
-OneTwoFourWorkflow.addStep(
-    Schema.slack.functions.Delay,
-    {
-        minutes_to_delay: 1,
-    }
-)
-
 const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
     users: getReactorsStep.outputs.users,
 })
 
 OneTwoFourWorkflow.addStep(
     InviteUsersToHuddleDefinition, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
     matches: pairUsers.outputs.matches,
     prompt: inputForm.outputs.fields.prompt,
 })
@@ -109,6 +97,7 @@ const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 
 OneTwoFourWorkflow.addStep(
     InviteUsersToHuddleDefinition, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
     matches: groupUsers.outputs.matches,
     prompt: inputForm.outputs.fields.prompt,
 })
@@ -122,7 +111,7 @@ OneTwoFourWorkflow.addStep(
 
 OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    thread_ts: sendMessageStep.outputs.message_ts, 
+    thread_ts: sendMessageStep.outputs.message_ts,
     message: "@here 1-2-4 Exercise Complete.  Please share any takeaways here.",
 });
 
