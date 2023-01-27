@@ -10,20 +10,20 @@ import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_intr
  * https://api.slack.com/future/workflows
  */
 const OneTwoFourWorkflow = DefineWorkflow({
-  callback_id: "onetwofour_workflow",
-  title: "124 Workflow",
-  description: "Start 1-2-4",
-  input_parameters: {
-    properties: {
-      interactivity: {
-        type: Schema.slack.types.interactivity,
-      },
-      channel_id: {
-        type: Schema.slack.types.channel_id,
-      },
+    callback_id: "onetwofour_workflow",
+    title: "124 Workflow",
+    description: "Start 1-2-4",
+    input_parameters: {
+        properties: {
+            interactivity: {
+                type: Schema.slack.types.interactivity,
+            },
+            channel_id: {
+                type: Schema.slack.types.channel_id,
+            },
+        },
+        required: ["interactivity"],
     },
-    required: ["interactivity"],
-  },
 });
 
 /**
@@ -32,40 +32,40 @@ const OneTwoFourWorkflow = DefineWorkflow({
  * https://api.slack.com/future/functions#open-a-form
  */
 const inputForm = OneTwoFourWorkflow.addStep(
-  Schema.slack.functions.OpenForm,
-  {
-    title: "Start 1-2-4",
-    interactivity: OneTwoFourWorkflow.inputs.interactivity,
-    submit_label: "Start 1-2-4",
-    fields: {
-      elements: [{
-        name: "prompt",
-        title: "Prompt",
-        type: Schema.types.string,
-      }],
-      required: ["prompt"],
+    Schema.slack.functions.OpenForm,
+    {
+        title: "Start 1-2-4",
+        interactivity: OneTwoFourWorkflow.inputs.interactivity,
+        submit_label: "Start 1-2-4",
+        fields: {
+            elements: [{
+                name: "prompt",
+                title: "Prompt",
+                type: Schema.types.string,
+            }],
+            required: ["prompt"],
+        },
     },
-  },
 );
 
 const greetingFunctionStep = OneTwoFourWorkflow.addStep(
-  OneTwoFourIntroductionDefinition,
-  {
-    prompt: inputForm.outputs.fields.prompt,
-  },
+    OneTwoFourIntroductionDefinition,
+    {
+        prompt: inputForm.outputs.fields.prompt,
+    },
 );
 
 const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: OneTwoFourWorkflow.inputs.channel_id,
-  message: greetingFunctionStep.outputs.prompt,
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message: greetingFunctionStep.outputs.prompt,
 });
 
-OneTwoFourWorkflow.addStep(
-    Schema.slack.functions.Delay,
-    {
-        minutes_to_delay: 1,
-    }
-)
+// OneTwoFourWorkflow.addStep(
+//     Schema.slack.functions.Delay,
+//     {
+//         minutes_to_delay: 1,
+//     }
+// )
 
 const getReactorsStep = OneTwoFourWorkflow.addStep(
     GetReactorsDefinition, {
@@ -74,7 +74,8 @@ const getReactorsStep = OneTwoFourWorkflow.addStep(
 });
 
 const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
-    users: getReactorsStep.outputs.users,
+    users: ["U04HP52TRLY"]
+    // users: getReactorsStep.outputs.users,
 })
 
 OneTwoFourWorkflow.addStep(
@@ -84,12 +85,12 @@ OneTwoFourWorkflow.addStep(
     prompt: inputForm.outputs.fields.prompt,
 })
 
-OneTwoFourWorkflow.addStep(
-    Schema.slack.functions.Delay,
-    {
-        minutes_to_delay: 2,
-    }
-)
+// OneTwoFourWorkflow.addStep(
+//     Schema.slack.functions.Delay,
+//     {
+//         minutes_to_delay: 2,
+//     }
+// )
 
 const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
     users: pairUsers.outputs.matches,
@@ -102,12 +103,12 @@ OneTwoFourWorkflow.addStep(
     prompt: inputForm.outputs.fields.prompt,
 })
 
-OneTwoFourWorkflow.addStep(
-    Schema.slack.functions.Delay,
-    {
-        minutes_to_delay: 4,
-    }
-)
+// OneTwoFourWorkflow.addStep(
+//     Schema.slack.functions.Delay,
+//     {
+//         minutes_to_delay: 4,
+//     }
+// )
 
 OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
