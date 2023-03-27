@@ -41,6 +41,7 @@ const inputForm = OneTwoFourWorkflow.addStep(
       elements: [{
         name: "prompt",
         title: "Prompt",
+        long: true,
         type: Schema.types.string,
       }],
       required: ["prompt"],

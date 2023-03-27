@@ -35,21 +35,21 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
 export default SlackFunction(
     InviteUsersToHuddleDefinition,
     async ({ inputs, client }) => {
-        inputs.matches.forEach(async (userIds: string) => {
-            const userNames = await Promise.all(userIds.split(',').map(async (userId) => {
-                const result = await client.users.info({user: userId})
-                return `<@${result.user.name}>`
-            }))
-            const usersToNotify = userNames.join(' ')
-            const postMessageResponse = client.chat.postMessage({
-                channel: inputs.channel_id,
-                text: `Hey there ${usersToNotify}! You are invited to join a huddle in this thread.: ` +
+        await Promise.all(inputs.matches.map(async (userIds: string) => {
+            const conversation = await client.conversations.open({
+                users: userIds
+            })
+            console.log(conversation);
+            // Get the conversation ID of the huddle
+            const conversationId = conversation.channel.id;
+            client.chat.postMessage({
+                channel: conversationId,
+                text: 'Hey there! You are invited to join this huddle: ' +
                     '. We will be discussing this prompt:\n\n' +
                     `> ${inputs.prompt}\n\n` +
-                    'Click "Start Huddle in Thread" under the menu to the right on this message to join.'
+                    'Just click the "huddle" to icon to join.'
             });
-        });
-
+        }));
         return { outputs: {prompt} };
     },
 );
