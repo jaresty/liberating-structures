@@ -1,8 +1,8 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "./functions/get_reactors.ts";
-import { GreetingFunctionDefinition } from "./functions/greeting_function.ts";
+import { ImpromptuNetworkingFunctionDefinition } from "./functions/impromptu_networking_function.ts";
 import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
-import GreetingWorkflow from "./workflows/greeting_workflow.ts";
+import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -14,8 +14,8 @@ export default Manifest({
   description:
     "A simple liberating structures bot for collaboration",
   icon: "assets/default_new_app_icon.png",
-    workflows: [GreetingWorkflow, OneTwoFourWorkflow],
-    functions: [GetReactorsDefinition, GreetingFunctionDefinition],
+    workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
+    functions: [GetReactorsDefinition, ImpromptuNetworkingFunctionDefinition],
   outgoingDomains: [],
   botScopes: [
       "commands",
