@@ -36,7 +36,7 @@ export default SlackFunction(
   ({ inputs }) => {
     const outputText = inputs.prompt + "\n\n" +
       "\n>React to this prompt within the next one minute to join our impromptu networking session." +
-      "  It will only take about 10 minutes, and you can meet a few new people.";
+      "  It will only take about 10 minutes, and you can meet a few new people. (liberating-structures, impromptu-networking)";
     return { outputs: { prompt: outputText } };
   },
 );

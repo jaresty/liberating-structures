@@ -36,7 +36,7 @@ export default SlackFunction(
   ({ inputs }) => {
     const prompt = inputs.prompt + "\n" +
       "> React to this message within the next 1 minute to join in this 1-2-4 exercise." +
-      "  Think about your own answer to the prompt while you wait.";
+      "  Think about your own answer to the prompt while you wait. (liberating-structures, one-two-four)";
       return { outputs: {prompt} };
   },
 );
