@@ -68,6 +68,12 @@ OneTwoFourWorkflow.addStep(
     }
 )
 
+OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    thread_ts: sendMessageStep.outputs.message_ts,
+    message: "1-2-4 Exercise has begun.",
+});
+
 const getReactorsStep = OneTwoFourWorkflow.addStep(
     GetReactorsDefinition, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
@@ -113,7 +119,7 @@ OneTwoFourWorkflow.addStep(
 OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     thread_ts: sendMessageStep.outputs.message_ts,
-    message: "@here 1-2-4 Exercise Complete.  Please share any takeaways here.",
+    message: "1-2-4 Exercise Complete.  Please share any takeaways here.",
 });
 
 export default OneTwoFourWorkflow;

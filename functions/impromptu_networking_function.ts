@@ -14,16 +14,16 @@ export const ImpromptuNetworkingFunctionDefinition = DefineFunction({
   input_parameters: {
     properties: {
       prompt: {
-        type: Schema.slack.types.rich_text,
+        type: Schema.types.string,
         description: "Prompt for networking",
-      },
+      }
     },
     required: ["prompt"],
   },
   output_parameters: {
     properties: {
       prompt: {
-        type: Schema.slack.types.rich_text,
+        type: Schema.types.string,
         description: "Prompt for networking session",
       },
     },
@@ -34,7 +34,9 @@ export const ImpromptuNetworkingFunctionDefinition = DefineFunction({
 export default SlackFunction(
   ImpromptuNetworkingFunctionDefinition,
   ({ inputs }) => {
-      const prompt = `@here Let's do some impromptu networking!  React to this prompt within the next 1 minute to join.  It will only take about 10 minutes, and you can meet a few new people.  The prompt we will use is this.\n\n> ${inputs.prompt}`;
-      return { outputs: {prompt} };
+    const outputText = inputs.prompt + "\n\n" +
+      "\n>React to this prompt within the next one minute to join our impromptu networking session." +
+      "  It will only take about 10 minutes, and you can meet a few new people.";
+    return { outputs: { prompt: outputText } };
   },
 );

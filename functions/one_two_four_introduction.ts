@@ -34,7 +34,9 @@ export const OneTwoFourIntroductionDefinition = DefineFunction({
 export default SlackFunction(
   OneTwoFourIntroductionDefinition,
   ({ inputs }) => {
-      const prompt = `@here Let's do a 1-2-4 exercise!  React to this message within the next 1 minute to join.  Think about your own answer to this prompt while you wait.\n\n> ${inputs.prompt}`;
+    const prompt = inputs.prompt + "\n" +
+      "> React to this message within the next 1 minute to join in this 1-2-4 exercise." +
+      "  Think about your own answer to the prompt while you wait.";
       return { outputs: {prompt} };
   },
 );

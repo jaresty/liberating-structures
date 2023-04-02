@@ -39,17 +39,14 @@ export default SlackFunction(
             const conversation = await client.conversations.open({
                 users: userIds
             })
-            console.log(conversation);
             // Get the conversation ID of the huddle
             const conversationId = conversation.channel.id;
             client.chat.postMessage({
                 channel: conversationId,
-                text: 'Hey there! You are invited to join this huddle: ' +
-                    '. We will be discussing this prompt:\n\n' +
-                    `> ${inputs.prompt}\n\n` +
-                    'Just click the "huddle" to icon to join.'
+                text: inputs.prompt + "\n\n" +
+                    "> Hey there! You are invited to join this huddle to discuss."
             });
         }));
-        return { outputs: {prompt} };
+        return { outputs: { prompt } };
     },
 );

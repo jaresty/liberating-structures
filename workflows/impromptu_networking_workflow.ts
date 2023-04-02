@@ -38,12 +38,15 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
     interactivity: ImpromptuNetworkingWorkflow.inputs.interactivity,
     submit_label: "Start Networking",
     fields: {
-      elements: [{
-        name: "prompt",
-        title: "Prompt",
-        type: Schema.slack.types.rich_text,
-        default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
-      }],
+      elements: [
+        {
+          name: "prompt",
+          title: "Prompt",
+          long: true,
+          type: Schema.types.string,
+          default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
+        }
+      ],
       required: ["prompt"],
     },
   },
@@ -67,6 +70,12 @@ ImpromptuNetworkingWorkflow.addStep(
         minutes_to_delay: 1,
     }
 )
+
+ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    thread_ts: sendMessageStep.outputs.message_ts,
+    message: "Networking has started.",
+});
 
 const getReactorsStep = ImpromptuNetworkingWorkflow.addStep(
     GetReactorsDefinition, {
