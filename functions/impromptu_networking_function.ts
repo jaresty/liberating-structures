@@ -6,17 +6,17 @@ import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
  * be used independently or as steps in Workflows.
  * https://api.slack.com/future/functions/custom
  */
-export const GreetingFunctionDefinition = DefineFunction({
-  callback_id: "greeting_function",
+export const ImpromptuNetworkingFunctionDefinition = DefineFunction({
+  callback_id: "impromptu_networking_function",
   title: "Impromptu Networking",
   description: "Impromptu Networking",
-  source_file: "functions/greeting_function.ts",
+  source_file: "functions/impromptu_networking_function.ts",
   input_parameters: {
     properties: {
       prompt: {
         type: Schema.types.string,
         description: "Prompt for networking",
-      },
+      }
     },
     required: ["prompt"],
   },
@@ -32,9 +32,11 @@ export const GreetingFunctionDefinition = DefineFunction({
 });
 
 export default SlackFunction(
-  GreetingFunctionDefinition,
+  ImpromptuNetworkingFunctionDefinition,
   ({ inputs }) => {
-      const prompt = `@here Let's do some impromptu networking!  React to this prompt within the next 1 minute to join.  It will only take about 10 minutes, and you can meet a few new people.  The prompt we will use is this.\n\n> ${inputs.prompt}`;
-      return { outputs: {prompt} };
+    const outputText = inputs.prompt + "\n\n" +
+      "\n>React to this prompt within the next one minute to join our impromptu networking session." +
+      "  It will only take about 10 minutes, and you can meet a few new people.";
+    return { outputs: { prompt: outputText } };
   },
 );

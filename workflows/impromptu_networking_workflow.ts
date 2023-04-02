@@ -1,6 +1,6 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
-import { GreetingFunctionDefinition } from "../functions/greeting_function.ts";
+import { ImpromptuNetworkingFunctionDefinition } from "../functions/impromptu_networking_function.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 
@@ -9,8 +9,8 @@ import { MatchUsersDefinition } from "../functions/match_users.ts";
  * Each step in a Workflow is a function.
  * https://api.slack.com/future/workflows
  */
-const GreetingWorkflow = DefineWorkflow({
-  callback_id: "greeting_workflow",
+const ImpromptuNetworkingWorkflow = DefineWorkflow({
+  callback_id: "impromptu_networking_workflow",
   title: "Impromptu Networking",
   description: "Start Impromptu Networking",
   input_parameters: {
@@ -31,65 +31,73 @@ const GreetingWorkflow = DefineWorkflow({
  * built-in OpenForm function as a first step.
  * https://api.slack.com/future/functions#open-a-form
  */
-const inputForm = GreetingWorkflow.addStep(
+const inputForm = ImpromptuNetworkingWorkflow.addStep(
   Schema.slack.functions.OpenForm,
   {
     title: "Start Networking Session",
-    interactivity: GreetingWorkflow.inputs.interactivity,
+    interactivity: ImpromptuNetworkingWorkflow.inputs.interactivity,
     submit_label: "Start Networking",
     fields: {
-      elements: [{
-        name: "prompt",
-        title: "Prompt",
-        long: true,
-        type: Schema.types.string,
-        default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
-      }],
+      elements: [
+        {
+          name: "prompt",
+          title: "Prompt",
+          long: true,
+          type: Schema.types.string,
+          default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
+        }
+      ],
       required: ["prompt"],
     },
   },
 );
 
-const greetingFunctionStep = GreetingWorkflow.addStep(
-  GreetingFunctionDefinition,
+const ImpromptuNetworkingFunctionStep = ImpromptuNetworkingWorkflow.addStep(
+  ImpromptuNetworkingFunctionDefinition,
   {
     prompt: inputForm.outputs.fields.prompt,
   },
 );
 
-const sendMessageStep = GreetingWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: GreetingWorkflow.inputs.channel_id,
-  message: greetingFunctionStep.outputs.prompt,
+const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+  message: ImpromptuNetworkingFunctionStep.outputs.prompt,
 });
 
-GreetingWorkflow.addStep(
+ImpromptuNetworkingWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
         minutes_to_delay: 1,
     }
 )
 
-const getReactorsStep = GreetingWorkflow.addStep(
+ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    thread_ts: sendMessageStep.outputs.message_ts,
+    message: "Networking has started.",
+});
+
+const getReactorsStep = ImpromptuNetworkingWorkflow.addStep(
     GetReactorsDefinition, {
-    channel_id: GreetingWorkflow.inputs.channel_id,
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
     timestamp: sendMessageStep.outputs.message_ts,
 });
 
 for(let i=0;i < 3; i++) {
-    let matchUsers = GreetingWorkflow.addStep(MatchUsersDefinition, {
+    let matchUsers = ImpromptuNetworkingWorkflow.addStep(MatchUsersDefinition, {
         users: getReactorsStep.outputs.users,
         // users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
     })
 
-    GreetingWorkflow.addStep(
+    ImpromptuNetworkingWorkflow.addStep(
         InviteUsersToHuddleDefinition, {
-        channel_id: GreetingWorkflow.inputs.channel_id,
+        channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
         matches: matchUsers.outputs.matches,
         prompt: inputForm.outputs.fields.prompt,
     })
 
     if(i < 2) {
-        GreetingWorkflow.addStep(
+        ImpromptuNetworkingWorkflow.addStep(
             Schema.slack.functions.Delay,
             {
                 minutes_to_delay: 3,
@@ -99,4 +107,4 @@ for(let i=0;i < 3; i++) {
 }
 
 
-export default GreetingWorkflow;
+export default ImpromptuNetworkingWorkflow;

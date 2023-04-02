@@ -1,5 +1,5 @@
 import { Trigger } from "deno-slack-api/types.ts";
-import GreetingWorkflow from "../workflows/greeting_workflow.ts";
+import ImpromptuNetworkingWorkflow from "../workflows/impromptu_networking_workflow.ts";
 
 /**
  * Triggers determine when Workflows are executed. A trigger
@@ -7,11 +7,11 @@ import GreetingWorkflow from "../workflows/greeting_workflow.ts";
  * such as a user pressing a button or when a specific event occurs.
  * https://api.slack.com/future/triggers
  */
-const greetingTrigger: Trigger<typeof GreetingWorkflow.definition> = {
+const impromptuNetworkingTrigger: Trigger<typeof ImpromptuNetworkingWorkflow.definition> = {
   type: "shortcut",
   name: "Start Impromptu Networking",
   description: "Start Impromptu Networking Session",
-  workflow: "#/workflows/greeting_workflow",
+  workflow: "#/workflows/impromptu_networking_workflow",
   inputs: {
     interactivity: {
       value: "{{data.interactivity}}",
@@ -22,4 +22,4 @@ const greetingTrigger: Trigger<typeof GreetingWorkflow.definition> = {
   },
 };
 
-export default greetingTrigger;
+export default impromptuNetworkingTrigger;
