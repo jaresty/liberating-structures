@@ -13,7 +13,7 @@ export default Manifest({
   name: "liberating-structures",
   description:
     "A simple liberating structures bot for collaboration",
-  icon: "assets/default_new_app_icon.png",
+  icon: "assets/kitty.png",
     workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
     functions: [GetReactorsDefinition, ImpromptuNetworkingFunctionDefinition],
   outgoingDomains: [],
