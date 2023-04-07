@@ -71,16 +71,16 @@ ImpromptuNetworkingWorkflow.addStep(
     }
 )
 
-ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
+ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-    thread_ts: sendMessageStep.outputs.message_ts,
+    message_context: sendMessageStep.outputs.message_context,
     message: "Networking has started.",
 });
 
 const getReactorsStep = ImpromptuNetworkingWorkflow.addStep(
     GetReactorsDefinition, {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-    timestamp: sendMessageStep.outputs.message_ts,
+    timestamp: sendMessageStep.outputs.message_context.message_ts,
 });
 
 for(let i=0;i < 3; i++) {
