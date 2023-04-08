@@ -45,6 +45,9 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
           long: true,
           type: Schema.types.string,
           default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
+          description: "Start an Impromptu Networking session. All users who react with a slack emoji to this prompt will be grouped" +
+            " into pairs at random and given 5 minutes to discuss; pairs will be swapped three times.  The practice is based on the " +
+            "liberating structures 'Impromptu Networking' exercise defined at https://www.liberatingstructures.com/2-impromptu-networking/"
         }
       ],
       required: ["prompt"],

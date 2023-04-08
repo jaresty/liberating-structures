@@ -27,7 +27,7 @@ export const JoinAllUsersDefinition = DefineFunction({
                 },
             },
         },
-        required: ["matches"],
+        required: ["allUsers"],
     }
 })
 
