@@ -67,7 +67,7 @@ const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functio
 ImpromptuNetworkingWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
-        minutes_to_delay: 1,
+        minutes_to_delay: 2,
     }
 )
 
@@ -89,18 +89,19 @@ for(let i=0;i < 3; i++) {
         // users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
     })
 
-    ImpromptuNetworkingWorkflow.addStep(
-        InviteUsersToHuddleDefinition, {
-        channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-        matches: matchUsers.outputs.matches,
-        prompt: inputForm.outputs.fields.prompt,
-    })
+  ImpromptuNetworkingWorkflow.addStep(
+    InviteUsersToHuddleDefinition, {
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    matches: matchUsers.outputs.matches,
+    prompt: inputForm.outputs.fields.prompt,
+    instructions: "In each round, 2 minutes per person to answer the questions. 5 min. per round"
+  })
 
     if(i < 2) {
         ImpromptuNetworkingWorkflow.addStep(
             Schema.slack.functions.Delay,
             {
-                minutes_to_delay: 3,
+                minutes_to_delay: 5,
             }
         )
     }

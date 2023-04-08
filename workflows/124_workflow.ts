@@ -3,6 +3,7 @@ import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_introduction.ts";
+import { JoinAllUsersDefinition } from "../functions/join_all_users.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -11,8 +12,8 @@ import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_intr
  */
 const OneTwoFourWorkflow = DefineWorkflow({
   callback_id: "onetwofour_workflow",
-  title: "124 Workflow",
-  description: "Start 1-2-4",
+  title: "1-2-4-All Workflow",
+  description: "Start 1-2-4-All",
   input_parameters: {
     properties: {
       interactivity: {
@@ -34,9 +35,9 @@ const OneTwoFourWorkflow = DefineWorkflow({
 const inputForm = OneTwoFourWorkflow.addStep(
   Schema.slack.functions.OpenForm,
   {
-    title: "Start 1-2-4",
+    title: "Start 1-2-4-All",
     interactivity: OneTwoFourWorkflow.inputs.interactivity,
-    submit_label: "Start 1-2-4",
+    submit_label: "Start 1-2-4-All",
     fields: {
       elements: [{
         name: "prompt",
@@ -64,14 +65,14 @@ const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMe
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
-        minutes_to_delay: 1,
+        minutes_to_delay: 2,
     }
 )
 
 OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
-    message: "1-2-4 Exercise has begun.",
+    message: "1-2-4-All Exercise has begun.",
 });
 
 const getReactorsStep = OneTwoFourWorkflow.addStep(
@@ -80,15 +81,27 @@ const getReactorsStep = OneTwoFourWorkflow.addStep(
     timestamp: sendMessageStep.outputs.message_context.message_ts,
 });
 
+// const getReactorsStep = {
+//   outputs: {
+//         users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
+//   }
+// }
+
 const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
     users: getReactorsStep.outputs.users,
 })
 
+const allReactors = OneTwoFourWorkflow.addStep(JoinAllUsersDefinition, {
+  users: getReactorsStep.outputs.users
+})
+
+
 OneTwoFourWorkflow.addStep(
-    InviteUsersToHuddleDefinition, {
-    channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    matches: pairUsers.outputs.matches,
-    prompt: inputForm.outputs.fields.prompt,
+  InviteUsersToHuddleDefinition, {
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  matches: pairUsers.outputs.matches,
+  prompt: inputForm.outputs.fields.prompt,
+  instructions: "Generate ideas in pairs, building on ideas from self-reflection. 2 min"
 })
 
 OneTwoFourWorkflow.addStep(
@@ -103,10 +116,11 @@ const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 })
 
 OneTwoFourWorkflow.addStep(
-    InviteUsersToHuddleDefinition, {
-    channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    matches: groupUsers.outputs.matches,
-    prompt: inputForm.outputs.fields.prompt,
+  InviteUsersToHuddleDefinition, {
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  matches: groupUsers.outputs.matches,
+  prompt: inputForm.outputs.fields.prompt,
+  instructions: "Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min."
 })
 
 OneTwoFourWorkflow.addStep(
@@ -115,6 +129,22 @@ OneTwoFourWorkflow.addStep(
         minutes_to_delay: 4,
     }
 )
+
+OneTwoFourWorkflow.addStep(
+  InviteUsersToHuddleDefinition, {
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  matches: allReactors.outputs.allUsers,
+  prompt: inputForm.outputs.fields.prompt,
+  instructions: "Ask, “What is one idea that stood out in your conversation?” Each group shares one important idea with all (repeat cycle as needed). 5 min."
+})
+
+OneTwoFourWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: 5,
+    }
+)
+
 
 OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,

@@ -22,6 +22,10 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
             prompt: {
                 type: Schema.types.string,
                 description: "Prompt to send",
+            },
+            instructions: {
+                type: Schema.types.string,
+                description: "Additional instructions for this invitation",
             }
         },
         required: ["matches", "channel_id"],
@@ -44,7 +48,8 @@ export default SlackFunction(
             client.chat.postMessage({
                 channel: conversationId,
                 text: inputs.prompt + "\n\n" +
-                    "> Hey there! You are invited to join this huddle to discuss."
+                    "> Hey there! You are invited to join this huddle to discuss." +
+                    "\n\n_" + inputs.instructions + "_"
             });
         }));
         return { outputs: { prompt } };
