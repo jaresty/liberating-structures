@@ -49,7 +49,7 @@ export default SlackFunction(
       " It's a quick and easy " +
       (inputs.rounds * 5) +
       "-minute activity, and you'll get the chance to meet some new people." +
-      " We will be doing" + inputs.rounds + " round(s) of networking."
+      " We will be doing " + inputs.rounds + " round(s) of networking."
       " Based on the liberating-structures approach, this session encourages spontaneous interactions and fosters new connections." +
       " Don't miss out on this opportunity to expand your network and socialize with like-minded individuals. (liberating-structures, impromptu-networking)"
     return { outputs: { prompt: outputText } };
