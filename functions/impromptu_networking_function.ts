@@ -20,6 +20,10 @@ export const ImpromptuNetworkingFunctionDefinition = DefineFunction({
       wait_time: {
         type: Schema.types.number,
         description: "How many minutes to wait for reactions",
+      },
+      rounds: {
+        type: Schema.types.number,
+        description: "How many rounds of networking will be done",
       }
     },
     required: ["prompt", "wait_time"],
@@ -42,7 +46,10 @@ export default SlackFunction(
       "> Act fast and react to this prompt within the next " +
       inputs.wait_time +
       " minute(s) to be a part of our impromptu networking session." +
-      " It's a quick and easy 15-minute activity, and you'll get the chance to meet some new people." +
+      " It's a quick and easy " +
+      (inputs.rounds * 5) +
+      "-minute activity, and you'll get the chance to meet some new people." +
+      " We will be doing" + inputs.rounds + " round(s) of networking."
       " Based on the liberating-structures approach, this session encourages spontaneous interactions and fosters new connections." +
       " Don't miss out on this opportunity to expand your network and socialize with like-minded individuals. (liberating-structures, impromptu-networking)"
     return { outputs: { prompt: outputText } };
