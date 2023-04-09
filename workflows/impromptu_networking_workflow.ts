@@ -49,9 +49,16 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
           type: Schema.types.string,
           description: 'What will we discuss? Works well with one challenge question and one give-and-take question. ' +
             'Example: "What big challenge do you bring to this gathering ? What do you hope to get from and give to the world today?"'
+        },
+        {
+          name: "wait_time",
+          title: "Wait Time",
+          type: Schema.types.number,
+          description: "How many minutes to wait for reactions before starting the activity.",
+          default: 2,
         }
       ],
-      required: ["prompt"],
+      required: ["prompt", "wait_time"],
     },
   },
 );
@@ -60,6 +67,7 @@ const ImpromptuNetworkingFunctionStep = ImpromptuNetworkingWorkflow.addStep(
   ImpromptuNetworkingFunctionDefinition,
   {
     prompt: inputForm.outputs.fields.prompt,
+    wait_time: inputForm.outputs.fields.wait_time,
   },
 );
 
@@ -71,7 +79,7 @@ const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functio
 ImpromptuNetworkingWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
-        minutes_to_delay: 2,
+        minutes_to_delay: inputForm.outputs.fields.wait_time,
     }
 )
 

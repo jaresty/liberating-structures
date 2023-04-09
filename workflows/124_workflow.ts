@@ -54,8 +54,15 @@ const inputForm = OneTwoFourWorkflow.addStep(
           "What opportunities do YOU see for making progress on this challenge? How" +
           " would you handle this situation ? What ideas or actions do you " +
           " recommend?)"
+      },
+      {
+        name: "wait_time",
+        title: "Wait Time",
+        type: Schema.types.number,
+        description: "How many minutes to wait for reactions before starting the activity.",
+        default: 2,
       }],
-      required: ["prompt"],
+      required: ["prompt", "wait_time"],
     },
   },
 );
@@ -64,6 +71,7 @@ const greetingFunctionStep = OneTwoFourWorkflow.addStep(
   OneTwoFourIntroductionDefinition,
   {
     prompt: inputForm.outputs.fields.prompt,
+    wait_time: inputForm.outputs.fields.wait_time,
   },
 );
 
@@ -75,7 +83,7 @@ const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMe
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
-        minutes_to_delay: 2,
+        minutes_to_delay: inputForm.outputs.fields.wait_time,
     }
 )
 
