@@ -38,17 +38,22 @@ const inputForm = OneTwoFourWorkflow.addStep(
     title: "Start 1-2-4-All",
     interactivity: OneTwoFourWorkflow.inputs.interactivity,
     submit_label: "Start 1-2-4-All",
-        description: "Start a 1-2-4-All session. All users who react with a slack emoji to " +
-          "this prompt will be grouped into pairs at random, then combined into groups of 4-7, " +
-          "and finally into one large group to huddle and discuss the prompt. " +
-          "This is based on the liberating structures 1-2-4-All exercise defined at "+
-          "https://www.liberatingstructures.com/1-1-2-4-all/",
+    description: "Start a 1-2-4-All session. All users who react with a slack emoji to " +
+      "this prompt will be grouped into pairs at random, then combined into groups of 4-7, " +
+      "and finally into one large group to huddle and discuss the prompt. " +
+      "This is based on the liberating structures 1-2-4-All exercise defined at " +
+      "https://www.liberatingstructures.com/1-1-2-4-all/",
     fields: {
       elements: [{
         name: "prompt",
         title: "Prompt",
         long: true,
         type: Schema.types.string,
+        description: "Ask a question in response to the presentation of an" +
+          " issue, or about a problem to resolve or a proposal put forward (e.g., " +
+          "What opportunities do YOU see for making progress on this challenge? How" +
+          " would you handle this situation ? What ideas or actions do you " +
+          " recommend?)"
       }],
       required: ["prompt"],
     },

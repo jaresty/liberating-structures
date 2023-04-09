@@ -47,7 +47,8 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
           title: "Prompt",
           long: true,
           type: Schema.types.string,
-          default: 'What big challenge do you bring to this gathering? What do you hope to get from and give to the world today?',
+          description: 'What will we discuss? Works well with one challenge question and one give-and-take question. ' +
+            'Example: "What big challenge do you bring to this gathering ? What do you hope to get from and give to the world today?"'
         }
       ],
       required: ["prompt"],
