@@ -26,7 +26,7 @@ export const ImpromptuNetworkingFunctionDefinition = DefineFunction({
         description: "How many rounds of networking will be done",
       }
     },
-    required: ["prompt", "wait_time"],
+    required: ["prompt", "wait_time", "rounds"],
   },
   output_parameters: {
     properties: {
