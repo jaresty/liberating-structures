@@ -56,26 +56,21 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
           type: Schema.types.number,
           description: "How many minutes to wait for reactions before starting the activity.",
           default: 2,
-        },
-        {
-          name: "rounds",
-          title: "Rounds",
-          type: Schema.types.number,
-          description: "Number of rounds of networking to do",
-          default: 2,
-        },
+        }
       ],
-      required: ["prompt", "wait_time"],
+      required: ["prompt", "wait_time",],
     },
   },
 );
+
+const rounds = 2;
 
 const ImpromptuNetworkingFunctionStep = ImpromptuNetworkingWorkflow.addStep(
   ImpromptuNetworkingFunctionDefinition,
   {
     prompt: inputForm.outputs.fields.prompt,
     wait_time: inputForm.outputs.fields.wait_time,
-    rounds: inputForm.outputs.fields.rounds,
+    rounds: rounds,
   },
 );
 
@@ -103,7 +98,7 @@ const getReactorsStep = ImpromptuNetworkingWorkflow.addStep(
     timestamp: sendMessageStep.outputs.message_context.message_ts,
 });
 
-for(let i=0;i < inputForm.outputs.fields.rounds; i++) {
+for(let i=0;i < rounds; i++) {
     let matchUsers = ImpromptuNetworkingWorkflow.addStep(MatchUsersDefinition, {
         users: getReactorsStep.outputs.users,
         // users: ['U04HP52TRLY'] // ,U027J95T3LG'], // getReactorsStep.outputs.users,
@@ -117,7 +112,7 @@ for(let i=0;i < inputForm.outputs.fields.rounds; i++) {
     instructions: "In each round, 2 minutes per person to answer the questions. 5 min. per round"
   })
 
-    if(i+1 < inputForm.outputs.fields.rounds) {
+    if(i+1 < rounds) {
         ImpromptuNetworkingWorkflow.addStep(
             Schema.slack.functions.Delay,
             {
