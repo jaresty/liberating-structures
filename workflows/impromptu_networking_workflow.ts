@@ -38,7 +38,7 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
     interactivity: ImpromptuNetworkingWorkflow.inputs.interactivity,
     submit_label: "Start Networking",
     description: "Start an Impromptu Networking session. All users who react with a slack emoji to this prompt will be grouped" +
-      " into pairs at random and given 5 minutes to discuss; pairs will be swapped three times.  The practice is based on the " +
+      " into pairs at random and given 5 minutes to discuss; pairs will be swapped 2 times.  The practice is based on the " +
       "liberating structures 'Impromptu Networking' exercise defined at https://www.liberatingstructures.com/2-impromptu-networking/",
     fields: {
       elements: [
