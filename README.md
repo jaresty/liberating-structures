@@ -13,6 +13,7 @@ These techniques are better than nothing, but they have limitations too:
 2. taking explicit turns adds a lot of wait time for those who aren't speaking, and they may not have interest in the topic but not feel strongly enough to interrupt
 3. sometimes the most useful conversations are not the most popular
 4. sometimes the person who cares enough to facilitate is someone who ought to contribute as well but can't manage both facilitation and participation at the same time
+5. it is easy for participants to pay attention to other things without disrupting the meeting, but this can undermine the value of meeting in the first place
 
 ## Liberating structures are useful for online meetings
 
