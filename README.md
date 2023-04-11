@@ -26,6 +26,12 @@ This structure breaks up an arbitrarily sized group into pairs, then foursomes, 
 
 This structure takes a group of people and pairs them up to discuss a prompt, switching pairs every 5 minutes. It is a nice icebreaker to enable everyone to participate and get to know each other.
 
+## Usage suggestions
+
+1. Use impromptu networking at the beginning or end of a meeting (even if you start in zoom, you can mute your mic there and use this to automate some quick breakouts as an icebreaker)
+2. Use 1-2-4-all at the end of a large meeting (like a retro) to parallelize discussion and let individuals pick the topics they want to join. You can post each topic as its own LS post, users can react to the ones they want to join, and the rest will just happen automatically.
+3. Set up an “event” on the team calendar for folks to submit as many 1-2-4-all / impromptu networking topics as they want. “Liberating Structures power hour”
+
 ## Sources
 
 This bot aims to replicate the liberating structures defined [here](https://www.liberatingstructures.com/) in slack using forms, threads, huddles, etc to enable serendipitous synchronous conversations in slack.
