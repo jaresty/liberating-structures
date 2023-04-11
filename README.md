@@ -1,6 +1,6 @@
 # Liberating Structures
 
-Online meetings are difficult for a variety of reasons. It can be hard to engage participants. It can be difficult to participate. There is a delay that often results in participants speaking over one another. With any sufficiently large online meeting, it gets difficult to make progress collaboratively towards an objective. To address the challenges inherent in big group online meetings, we experiment with techniques:
+Online meetings are difficult for a variety of reasons. It can be hard to engage participants. It can be difficult to participate since only one person can speak at a time. There is a delay that often results in participants speaking over one another. With any sufficiently large online meeting, it gets difficult to make progress collaboratively towards an objective. To address the challenges inherent in big group online meetings, we experiment with techniques:
 
 1. we make smaller meetings
 2. we take turns explicitly
@@ -11,7 +11,7 @@ These techniques are better than nothing, but they have limitations too:
 
 1. when you make smaller meetings, you may leave someone important out of the discussion
 2. taking explicit turns adds a lot of wait time for those who aren't speaking, and they may not have interest in the topic but not feel strongly enough to interrupt
-3. sometimes the most useful conversations are not the most popularity
+3. sometimes the most useful conversations are not the most popular
 4. sometimes the person who cares enough to facilitate is someone who ought to contribute as well but can't manage both facilitation and participation at the same time
 
 ## Liberating structures are useful for online meetings
