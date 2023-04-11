@@ -11,7 +11,7 @@ import { JoinAllUsersDefinition } from "./functions/join_all_users.ts";
  * https://api.slack.com/future/manifest
  */
 export default Manifest({
-  name: "liberating-structures",
+  name: "LiberatedPaws",
   description:
     "A simple liberating structures bot for collaboration",
   icon: "assets/kitty.png",
