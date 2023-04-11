@@ -40,9 +40,9 @@ export default SlackFunction(
   ({ inputs }) => {
     const prompt = inputs.prompt + "\n" +
       "> Don't miss out on the opportunity to participate in a 1-2-4-All exercise!" +
-      " Simply react to this message within the next " +
+      " Simply react to this message within the next *" +
       inputs.wait_time +
-      " minute(s) to join in." +
+      " minute(s)* to join in." +
       " The activity will take about 15 minutes." +
       " While you wait, take a moment to think about your response to the prompt." +
       " This activity is based on the liberating-structures approach, which encourages creative thinking and collaboration." +
