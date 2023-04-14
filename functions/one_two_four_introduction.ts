@@ -39,14 +39,9 @@ export default SlackFunction(
   OneTwoFourIntroductionDefinition,
   ({ inputs }) => {
     const prompt = inputs.prompt + "\n" +
-      "> Don't miss out on the opportunity to participate in a 1-2-4-All exercise!" +
-      " Simply react to this message within the next *" +
+      "> Within the next *" +
       inputs.wait_time +
-      " minute(s)* to join in." +
-      " The activity will take about 15 minutes." +
-      " While you wait, take a moment to think about your response to the prompt." +
-      " This activity is based on the liberating-structures approach, which encourages creative thinking and collaboration." +
-      " It's a fun and engaging way to explore new ideas. Join us now! (liberating-structures, one-two-four)"
+      " minute(s)*, react to this message to join in this one-two-four activity; or, follow up in the thread afterwards. (liberating-structures, one-two-four)"
     return { outputs: { prompt } };
   },
 );

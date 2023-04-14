@@ -4,6 +4,7 @@ import { ImpromptuNetworkingFunctionDefinition } from "./functions/impromptu_net
 import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
 import { JoinAllUsersDefinition } from "./functions/join_all_users.ts";
+import { DeleteMessageDefinition } from "./functions/delete_message_function.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -16,7 +17,7 @@ export default Manifest({
     "A simple liberating structures bot for collaboration",
   icon: "assets/kitty.png",
     workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
-    functions: [GetReactorsDefinition, ImpromptuNetworkingFunctionDefinition, JoinAllUsersDefinition],
+    functions: [GetReactorsDefinition, ImpromptuNetworkingFunctionDefinition, JoinAllUsersDefinition, DeleteMessageDefinition],
   outgoingDomains: [],
   botScopes: [
       "commands",

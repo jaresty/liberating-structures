@@ -4,6 +4,7 @@ import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_hudd
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_introduction.ts";
 import { JoinAllUsersDefinition } from "../functions/join_all_users.ts";
+import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -67,6 +68,20 @@ const inputForm = OneTwoFourWorkflow.addStep(
   },
 );
 
+const sendIntroductoryMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  message: "I'm about to send a message to the channel that was just now submitted as a prompt for a 1-2-4 activity." +
+    "  React to this message with a slack emoji within the time limit to participate in the synchronous discussion " +
+    " or respond in the thread later to keep it going. The 1-2-4 activity works like this:\n\n" +
+    "1. I will post a prompt here.\n" +
+    "2. Interested users can react to the prompt. (not this message)\n" +
+    "3. When time is up, I will put participants into pairs to huddle and discuss.\n" +
+    "4. After two minutes, I will put participants into groups of four to put together their ideas.\n" +
+    "5. After four minutes, I will put all participants into a group to discuss outcomes from each group.\n" +
+    "6. After five minutes, I will send a message to the thread to jot down notes from the discussion so folks who could not participate synchronously can follow up later.\n" +
+    ":point_down: :point_down: :point_down: :point_down: :point_down:\n\n"
+});
+
 const greetingFunctionStep = OneTwoFourWorkflow.addStep(
   OneTwoFourIntroductionDefinition,
   {
@@ -86,6 +101,14 @@ OneTwoFourWorkflow.addStep(
         minutes_to_delay: inputForm.outputs.fields.wait_time,
     }
 )
+
+OneTwoFourWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: sendIntroductoryMessageStep.outputs.message_context.message_ts
+  },
+);
 
 OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,

@@ -3,6 +3,7 @@ import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { ImpromptuNetworkingFunctionDefinition } from "../functions/impromptu_networking_function.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
+import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -65,6 +66,19 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
 
 const rounds = 2;
 
+const sendIntroductoryMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+  message: "I'm about to send a message to the channel that was just now submitted as a prompt for an impromptu networking activity." +
+    "  React to this message with a slack emoji within the time limit to participate in the networking session." +
+    " The activity works like this:\n\n" +
+    "1. I will post a prompt here.\n" +
+    "2. Interested users can react to the prompt. (not this message)\n" +
+    "3. When time is up, I will put participants into pairs to huddle and discuss for a five minute huddle.\n" +
+    "4. When time is up, I will put participants into pairs again to huddle and discuss for another five minute huddle.\n" +
+    "5. That's it!\n\n" +
+    ":point_down: :point_down: :point_down: :point_down: :point_down:"
+});
+
 const ImpromptuNetworkingFunctionStep = ImpromptuNetworkingWorkflow.addStep(
   ImpromptuNetworkingFunctionDefinition,
   {
@@ -85,6 +99,14 @@ ImpromptuNetworkingWorkflow.addStep(
         minutes_to_delay: inputForm.outputs.fields.wait_time,
     }
 )
+
+ImpromptuNetworkingWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    message_ts: sendIntroductoryMessageStep.outputs.message_context.message_ts
+  },
+);
 
 ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
