@@ -56,7 +56,7 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
           name: "delay",
           title: "Delay before posting",
           type: Schema.types.number,
-          description: "How many minutes to delay after submission before posting the prompt",
+          description: "How many minutes to delay after submission before posting the prompt. It's like sending a surprise conversation to your future self!",
           default: 0,
         },
         {
