@@ -4,6 +4,7 @@ import { ImpromptuNetworkingFunctionDefinition } from "../functions/impromptu_ne
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
+import { ImpromptuNetworkingNotificationDefinition } from "../functions/impromptu_networking_notification.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -52,38 +53,53 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
             'Example: "What big challenge do you bring to this gathering ? What do you hope to get from and give to the world today?"'
         },
         {
-          name: "wait_time",
+          name: "delay",
+          title: "Delay before posting",
+          type: Schema.types.number,
+          description: "How many minutes to delay after submission before posting the prompt",
+          default: 0,
+        },
+        {
+          name: "reaction_time",
           title: "Wait Time",
           type: Schema.types.number,
           description: "How many minutes to wait for reactions before starting the activity.",
           default: 2,
         }
       ],
-      required: ["prompt", "wait_time",],
+      required: ["prompt", "delay", "reaction_time",],
     },
   },
 );
 
 const rounds = 2;
 
+const prepareIntroductoryMessage = ImpromptuNetworkingWorkflow.addStep(
+  ImpromptuNetworkingNotificationDefinition,
+  {
+    prompt: inputForm.outputs.fields.prompt,
+    reaction_time: inputForm.outputs.fields.reaction_time,
+    delay: inputForm.outputs.fields.delay,
+  },
+);
+
 const sendIntroductoryMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-  message: "I'm about to send a message to the channel that was just now submitted as a prompt for an impromptu networking activity." +
-    "  React to this message with a slack emoji within the time limit to participate in the networking session." +
-    " The activity works like this:\n\n" +
-    "1. I will post a prompt here.\n" +
-    "2. Interested users can react to the prompt. (not this message)\n" +
-    "3. When time is up, I will put participants into pairs to huddle and discuss for a five minute huddle.\n" +
-    "4. When time is up, I will put participants into pairs again to huddle and discuss for another five minute huddle.\n" +
-    "5. That's it!\n\n" +
-    ":point_down: :point_down: :point_down: :point_down: :point_down:"
+  message: prepareIntroductoryMessage.outputs.prompt,
 });
+
+ImpromptuNetworkingWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+        minutes_to_delay: inputForm.outputs.fields.delay,
+    }
+)
 
 const ImpromptuNetworkingFunctionStep = ImpromptuNetworkingWorkflow.addStep(
   ImpromptuNetworkingFunctionDefinition,
   {
     prompt: inputForm.outputs.fields.prompt,
-    wait_time: inputForm.outputs.fields.wait_time,
+    reaction_time: inputForm.outputs.fields.reaction_time,
     rounds: rounds,
   },
 );
@@ -96,7 +112,7 @@ const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functio
 ImpromptuNetworkingWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
-        minutes_to_delay: inputForm.outputs.fields.wait_time,
+        minutes_to_delay: inputForm.outputs.fields.reaction_time,
     }
 )
 

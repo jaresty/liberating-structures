@@ -1,6 +1,7 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "./functions/get_reactors.ts";
 import { ImpromptuNetworkingFunctionDefinition } from "./functions/impromptu_networking_function.ts";
+import { ImpromptuNetworkingNotificationDefinition } from "./functions/impromptu_networking_notification.ts";
 import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
 import { JoinAllUsersDefinition } from "./functions/join_all_users.ts";
@@ -17,17 +18,24 @@ export default Manifest({
   description:
     "A simple liberating structures bot for collaboration",
   icon: "assets/kitty.png",
-    workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
-    functions: [GetReactorsDefinition, ImpromptuNetworkingFunctionDefinition, JoinAllUsersDefinition, DeleteMessageDefinition, OneTwoFourNotificationDefinition],
+  workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
+  functions: [
+    GetReactorsDefinition,
+    ImpromptuNetworkingFunctionDefinition,
+    JoinAllUsersDefinition,
+    DeleteMessageDefinition,
+    OneTwoFourNotificationDefinition,
+    ImpromptuNetworkingNotificationDefinition,
+  ],
   outgoingDomains: [],
   botScopes: [
-      "commands",
-      "chat:write",
-      "chat:write.public",
-      "reactions:read",
-      "groups:write",
-      "mpim:write",
-      "im:write",
-      "users:read",
+    "commands",
+    "chat:write",
+    "chat:write.public",
+    "reactions:read",
+    "groups:write",
+    "mpim:write",
+    "im:write",
+    "users:read",
   ],
 });
