@@ -186,13 +186,12 @@ OneTwoFourWorkflow.addStep(
     }
 )
 
-OneTwoFourWorkflow.addStep(
-  InviteUsersToHuddleDefinition, {
-  channel_id: OneTwoFourWorkflow.inputs.channel_id,
-  matches: allReactors.outputs.allUsers,
-  prompt: inputForm.outputs.fields.prompt,
-  instructions: "Ask, “What is one idea that stood out in your conversation?” Each group shares one important idea with all (repeat cycle as needed). 5 min."
-})
+OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_context: sendMessageStep.outputs.message_context,
+    message: `Small group breakouts complete. Please start a huddle in the thread now by selecting the action under from the thread context menu above the thread. \
+Ask, “What is one idea that stood out in your conversation?” Each group shares one important idea with all. 5 min.`
+});
 
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
