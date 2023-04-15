@@ -56,7 +56,7 @@ export default SlackFunction(
       "2. Interested users can react to the prompt. (not this message)\n" +
       "3. When time is up, I will put participants into pairs to huddle and discuss.\n" +
       "4. After two minutes, I will put participants into groups of four to put together their ideas.\n" +
-      "5. After four minutes, I will put all participants into a group to discuss outcomes from each group.\n" +
+      "5. After four minutes, I will ask all participants to huddle in a thread to discuss outcomes from each group.\n" +
       "6. After five minutes, I will send a message to the thread to jot down notes from the discussion so folks who could not participate synchronously can follow up later.\n" +
       ":hourglass: :hourglass: :hourglass: :hourglass: :hourglass: \n"
     return { outputs: { prompt } };
