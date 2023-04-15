@@ -46,7 +46,8 @@ export default SlackFunction(
     if (inputs.delay === 0) {
       whenPromptWillBeSent = "I am about to send a prompt to the channel."
     }
-    const prompt = whenPromptWillBeSent +
+    const prompt = ":one::two::four:\n\n" +
+      whenPromptWillBeSent +
       " The prompt was just submitted by someone in this channel.\n\n" +
       ` _Use a slack emoji to react to the message I will send_ within *${inputs.reaction_time} minutes* ` +
       "of it being sent to join in a one-two-four synchronous discussion; or, follow up in the thread afterwards.\n\n" +

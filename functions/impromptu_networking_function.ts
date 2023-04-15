@@ -42,7 +42,7 @@ export const ImpromptuNetworkingFunctionDefinition = DefineFunction({
 export default SlackFunction(
   ImpromptuNetworkingFunctionDefinition,
   ({ inputs }) => {
-    const outputText = "_" + inputs.prompt + "_\n\n" +
+    const outputText = ":knot::knot::knot::knot::knot:\n\n_" + inputs.prompt + "_\n\n" +
       "> Within *" +
       inputs.reaction_time +
       " minute(s)* react to this prompt to join our impromptu networking session. (liberating-structures, impromptu-networking)"

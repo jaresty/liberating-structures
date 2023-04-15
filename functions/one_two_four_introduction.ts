@@ -38,7 +38,7 @@ export const OneTwoFourIntroductionDefinition = DefineFunction({
 export default SlackFunction(
   OneTwoFourIntroductionDefinition,
   ({ inputs }) => {
-    const prompt = inputs.prompt + "\n" +
+    const prompt = ":one::two::four:\n\n_" + inputs.prompt + "_\n" +
       "> Within the next *" +
       inputs.reaction_time +
       " minute(s)*, react to this message to join in this one-two-four activity; or, follow up in the thread afterwards. (liberating-structures, one-two-four)"

@@ -61,7 +61,7 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
         },
         {
           name: "reaction_time",
-          title: "Wait Time",
+          title: "Reaction Time",
           type: Schema.types.number,
           description: "How many minutes to wait for reactions before starting the activity.",
           default: 2,
