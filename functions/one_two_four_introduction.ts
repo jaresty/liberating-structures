@@ -17,12 +17,12 @@ export const OneTwoFourIntroductionDefinition = DefineFunction({
         type: Schema.types.string,
         description: "Prompt for 1-2-4-All",
       },
-      wait_time: {
+      reaction_time: {
         type: Schema.types.number,
         description: "How many minutes to wait for reactions",
       }
     },
-    required: ["prompt", "wait_time"],
+    required: ["prompt", "reaction_time"],
   },
   output_parameters: {
     properties: {
@@ -40,7 +40,7 @@ export default SlackFunction(
   ({ inputs }) => {
     const prompt = inputs.prompt + "\n" +
       "> Within the next *" +
-      inputs.wait_time +
+      inputs.reaction_time +
       " minute(s)*, react to this message to join in this one-two-four activity; or, follow up in the thread afterwards. (liberating-structures, one-two-four)"
     return { outputs: { prompt } };
   },
