@@ -32,6 +32,7 @@ This structure takes a group of people and pairs them up to discuss a prompt, sw
 1. Use impromptu networking at the beginning or end of a meeting (even if you start in zoom, you can mute your mic there and use this to automate some quick breakouts as an icebreaker)
 2. Use 1-2-4-all at the end of a large meeting (like a retro) to parallelize discussion and let individuals pick the topics they want to join. You can post each topic as its own LS post, users can react to the ones they want to join, and the rest will just happen automatically.
 3. Set up an “event” on the team calendar for folks to submit as many 1-2-4-all / impromptu networking topics as they want. “Liberating Structures power hour”
+4. during retro when you do ideation (generating ideas to discuss), use a 1-2-4 to generate alone as well as in pairs and small groups
 
 ## Sources
 
