@@ -42,23 +42,28 @@ export const OneTwoFourNotificationDefinition = DefineFunction({
 export default SlackFunction(
   OneTwoFourNotificationDefinition,
   ({ inputs }) => {
-    let whenPromptWillBeSent = `I will be sending a prompt to the channel in *${inputs.delay} minute(s)*.`
+    let whenPromptWillBeSent = `I will send it to the channel in *${inputs.delay} minute(s)*.`
     if (inputs.delay === 0) {
-      whenPromptWillBeSent = "I am about to send a prompt to the channel."
+      whenPromptWillBeSent = "I am sending it to the channel now."
     }
-    const prompt = ":one::two::four:\n\n" +
-      whenPromptWillBeSent +
-      " The prompt was just submitted by someone in this channel.\n\n" +
-      ` _Use a slack emoji to react to the message I will send_ within *${inputs.reaction_time} minutes* ` +
-      "of it being sent to join in a one-two-four synchronous discussion; or, follow up in the thread afterwards.\n\n" +
-      "The activity works like this:\n\n" +
-      "1. I will post a prompt here.\n" +
-      "2. Interested users can react to the prompt. (not this message)\n" +
-      "3. When time is up, I will put participants into pairs to huddle and discuss.\n" +
-      "4. After two minutes, I will put participants into groups of four to put together their ideas.\n" +
-      "5. After four minutes, I will ask all participants to huddle in a thread to discuss outcomes from each group.\n" +
-      "6. After five minutes, I will send a message to the thread to jot down notes from the discussion so folks who could not participate synchronously can follow up later.\n" +
-      ":hourglass: :hourglass: :hourglass: :hourglass: :hourglass: \n"
+    const prompt = `:one::two::four:
+A prompt for a one-two-four-all activity was just submitted. ${whenPromptWillBeSent}
+
+_Use a slack emoji to react_ to the message I will send,
+_within ${inputs.reaction_time} minutes_
+to join in a one-two-four synchronous discussion; or, follow up in the thread afterwards.
+
+The activity works like this:
+
+1. I will post a prompt here.
+2. Interested users can react to the prompt. (not this message)
+3. When time is up, I will put participants into pairs to huddle and discuss.
+4. After two minutes, I will put participants into groups of four to put together their ideas.
+5. After four minutes, I will ask all participants to huddle in a thread to discuss outcomes from each group.
+6. After five minutes, I will send a message to the thread to jot down notes from the discussion so folks who could not participate synchronously can follow up later.
+
+:hourglass: :hourglass: :hourglass: :hourglass: :hourglass:
+`
     return { outputs: { prompt } };
   },
 );

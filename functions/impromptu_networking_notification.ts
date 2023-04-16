@@ -42,22 +42,28 @@ export const ImpromptuNetworkingNotificationDefinition = DefineFunction({
 export default SlackFunction(
   ImpromptuNetworkingNotificationDefinition,
   ({ inputs }) => {
-    let whenPromptWillBeSent = `I will be sending a prompt to the channel in *${inputs.delay} minute(s)*.`
+    let whenPromptWillBeSent = `I will send it to the channel in *${inputs.delay} minute(s)*.`
     if (inputs.delay === 0) {
-      whenPromptWillBeSent = "I am about to send a prompt to the channel."
+      whenPromptWillBeSent = "I am sending it to the channel now."
     }
-    const prompt = ":knot::knot::knot::knot::knot:\n\n" +
-      whenPromptWillBeSent +
-      " The prompt was just submitted by someone in this channel.\n\n" +
-      ` _Use a slack emoji to react to the message I will send_ within *${inputs.reaction_time} minutes* ` +
-      "of it being sent to join in an impromptu networking activity.\n\n" +
-      " The activity works like this:\n\n" +
-      "1. I will post a prompt here.\n" +
-      "2. Interested users can react to the prompt. (not this message)\n" +
-      "3. When time is up, I will put participants into pairs to huddle and discuss for a five minute huddle.\n" +
-      "4. When time is up, I will put participants into pairs again to huddle and discuss for another five minute huddle.\n" +
-      "5. That's it!\n\n" +
-      ":hourglass: :hourglass: :hourglass: :hourglass: :hourglass: \n"
+    const prompt = `:knot::knot::knot::knot::knot:
+A prompt for impromptu networking was just submitted. ${whenPromptWillBeSent}
+
+_Use a slack emoji to react_ to the message I send,
+_within ${inputs.reaction_time} minutes_
+to join in the impromptu networking activity.
+
+The activity works like this:
+
+1. I will post the prompt.
+2. Interested users can react to that message. (not this one)
+3. When time is up, I will put participants into pairs to huddle and discuss for a five minute huddle.
+4. When time is up, I will put participants into pairs again to huddle and discuss for another five minute huddle.
+5. That's it!
+
+:hourglass: :hourglass: :hourglass: :hourglass: :hourglass:
+`
+
     return { outputs: { prompt } };
   },
 );
