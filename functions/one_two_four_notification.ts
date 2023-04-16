@@ -58,7 +58,7 @@ The activity works like this:
 1. I will post a prompt here.
 2. Interested users can react to the prompt. (not this message)
 3. When time is up, I will put participants into pairs to huddle and discuss.
-4. After two minutes, I will put participants into groups of four to put together their ideas.
+4. After two minutes, I will put participants into groups of four or less to put together their ideas.
 5. After four minutes, I will ask all participants to huddle in a thread to discuss outcomes from each group.
 6. After five minutes, I will send a message to the thread to jot down notes from the discussion so folks who could not participate synchronously can follow up later.
 
