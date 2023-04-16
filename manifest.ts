@@ -1,6 +1,5 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "./functions/get_reactors.ts";
-import { ImpromptuNetworkingFunctionDefinition } from "./functions/impromptu_networking_function.ts";
 import { ImpromptuNetworkingNotificationDefinition } from "./functions/impromptu_networking_notification.ts";
 import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
@@ -21,7 +20,6 @@ export default Manifest({
   workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
   functions: [
     GetReactorsDefinition,
-    ImpromptuNetworkingFunctionDefinition,
     JoinAllUsersDefinition,
     DeleteMessageDefinition,
     OneTwoFourNotificationDefinition,

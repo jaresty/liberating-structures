@@ -1,6 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
-import { ImpromptuNetworkingFunctionDefinition } from "../functions/impromptu_networking_function.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
@@ -95,19 +94,14 @@ ImpromptuNetworkingWorkflow.addStep(
     }
 )
 
-const ImpromptuNetworkingFunctionStep = ImpromptuNetworkingWorkflow.addStep(
-  ImpromptuNetworkingFunctionDefinition,
-  {
-    prompt: inputForm.outputs.fields.prompt,
-    reaction_time: inputForm.outputs.fields.reaction_time,
-    rounds: rounds,
-  },
-);
-
 const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-  message: ImpromptuNetworkingFunctionStep.outputs.prompt,
-});
+  message: `:knot::knot::knot::knot::knot:
+${inputForm.outputs.fields.prompt}
+
+> Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
+react to this prompt to join our impromptu networking session. (liberating-structures, impromptu-networking)
+`});
 
 ImpromptuNetworkingWorkflow.addStep(
     Schema.slack.functions.Delay,
