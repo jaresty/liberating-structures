@@ -52,7 +52,11 @@ export const matchUsers = (initialUsers: string[], randomGenerator=Math) => {
     // Step 4
     let i = 0;
     if (users.length == 1) {
-        matches.push([users[i]])
+        if(groupsOfThree.length > 0) {
+            matches[0].push(users[i])
+        } else {
+            matches.push([users[i]])
+        }
         i += 1;
 
     } else if (users.length % 2 === 1) {

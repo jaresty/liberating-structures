@@ -50,6 +50,17 @@ Deno.test("Impromptu Networking function test", async () => {
 });
 
 Deno.test("Impromptu Networking function test", async () => {
+  const users = ["abc,def", "ghi,jkl", "mno,pqr"]
+
+  const result = matchUsers(users, fakeRandom)
+
+  assertEquals(
+    result,
+    ["abc,def,ghi,jkl,mno,pqr"]
+  );
+});
+
+Deno.test("Impromptu Networking function test", async () => {
   const users = ["abc","def","ghi","jkl","mno"]
 
   const result = matchUsers(users, fakeRandom)
@@ -67,7 +78,7 @@ Deno.test("Impromptu Networking function test", async () => {
 
   assertEquals(
     result,
-    ["abc,def,ghi","jkl,mno"]
+    ["abc,def,ghi,jkl,mno"]
   );
 });
 
