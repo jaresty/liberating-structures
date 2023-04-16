@@ -3,9 +3,7 @@ import { GetReactorsDefinition } from "./functions/get_reactors.ts";
 import { ImpromptuNetworkingNotificationDefinition } from "./functions/impromptu_networking_notification.ts";
 import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
-import { JoinAllUsersDefinition } from "./functions/join_all_users.ts";
 import { DeleteMessageDefinition } from "./functions/delete_message_function.ts";
-import { OneTwoFourNotificationDefinition } from "./functions/one_two_four_notification.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -20,9 +18,7 @@ export default Manifest({
   workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
   functions: [
     GetReactorsDefinition,
-    JoinAllUsersDefinition,
     DeleteMessageDefinition,
-    OneTwoFourNotificationDefinition,
     ImpromptuNetworkingNotificationDefinition,
   ],
   outgoingDomains: [],

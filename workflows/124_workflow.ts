@@ -2,8 +2,6 @@ import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
-import { OneTwoFourIntroductionDefinition } from "../functions/one_two_four_introduction.ts";
-import { JoinAllUsersDefinition } from "../functions/join_all_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 import { OneTwoFourNotificationDefinition } from "../functions/one_two_four_notification.ts";
 
@@ -97,17 +95,15 @@ OneTwoFourWorkflow.addStep(
     }
 )
 
-const greetingFunctionStep = OneTwoFourWorkflow.addStep(
-  OneTwoFourIntroductionDefinition,
-  {
-    prompt: inputForm.outputs.fields.prompt,
-    reaction_time: inputForm.outputs.fields.reaction_time,
-  },
-);
-
 const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
-  message: greetingFunctionStep.outputs.prompt,
+  message: `:one::two::four:
+
+${inputForm.outputs.fields.prompt}
+> Within the next *${inputForm.outputs.fields.reaction_time} minute(s)*, \
+react to this message to join in this one-two-four activity; \
+or, follow up in the thread afterwards. (liberating-structures, one-two-four)"
+`
 });
 
 OneTwoFourWorkflow.addStep(
@@ -146,11 +142,6 @@ const getReactorsStep = OneTwoFourWorkflow.addStep(
 const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
     users: getReactorsStep.outputs.users,
 })
-
-const allReactors = OneTwoFourWorkflow.addStep(JoinAllUsersDefinition, {
-  users: getReactorsStep.outputs.users
-})
-
 
 OneTwoFourWorkflow.addStep(
   InviteUsersToHuddleDefinition, {
