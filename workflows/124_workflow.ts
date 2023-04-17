@@ -59,7 +59,8 @@ const inputForm = OneTwoFourWorkflow.addStep(
         name: "delay",
         title: "Delay before posting",
         type: Schema.types.number,
-        description: "How many minutes to delay after submission before posting the prompt. It's like sending a surprise conversation to your future self!",
+        description: `How many minutes to delay after submission before posting the prompt. \
+It's like sending a surprise conversation to your future self; or, if you aren't available then - to someone else.`,
         default: 0,
       },
       {
