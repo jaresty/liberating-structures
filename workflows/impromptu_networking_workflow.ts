@@ -96,8 +96,7 @@ ImpromptuNetworkingWorkflow.addStep(
 
 const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-  message: `:knot::knot::knot::knot::knot:
-${inputForm.outputs.fields.prompt}
+  message: `${inputForm.outputs.fields.prompt}
 
 > Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
 react to this prompt to join our impromptu networking session. (liberating-structures, impromptu-networking)
