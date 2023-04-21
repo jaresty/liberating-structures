@@ -13,7 +13,7 @@ import { DeleteMessageDefinition } from "./functions/delete_message_function.ts"
 export default Manifest({
   name: "LiberatedPaws",
   description:
-    "A simple liberating structures bot for collaboration",
+    "Enable everyone to speak! A bot to facilitate inclusive large-group community-driven discussions.",
   icon: "assets/kitty.png",
   workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
   functions: [
