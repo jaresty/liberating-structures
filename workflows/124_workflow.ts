@@ -123,7 +123,7 @@ OneTwoFourWorkflow.addStep(
 OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
-    message: "1-2-4-All Exercise has begun.",
+    message: "1-2-4-All Exercise has begun. If you missed the the opportunity to react this time - please join in the text discussion in the thread or feel free to post this prompt again.",
 });
 
 const getReactorsStep = OneTwoFourWorkflow.addStep(

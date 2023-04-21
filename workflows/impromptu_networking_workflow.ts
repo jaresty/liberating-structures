@@ -120,7 +120,7 @@ ImpromptuNetworkingWorkflow.addStep(
 ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
-    message: "Networking has started.",
+    message: "Networking has started. If you missed the the opportunity to react this time - please join in the text discussion in the thread or feel free to post this prompt again.",
 });
 
 const getReactorsStep = ImpromptuNetworkingWorkflow.addStep(
