@@ -100,7 +100,7 @@ const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMe
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
   message: `${inputForm.outputs.fields.prompt}
 > Within the next *${inputForm.outputs.fields.reaction_time} minute(s)*, \
-react to this message to join in this one-two-four activity; \
+react to this message with a Slack emoji to join in this one-two-four activity; \
 or, follow up in the thread afterwards. (liberating-structures, one-two-four)"
 `
 });

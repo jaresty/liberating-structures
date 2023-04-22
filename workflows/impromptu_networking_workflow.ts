@@ -99,7 +99,7 @@ const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functio
   message: `${inputForm.outputs.fields.prompt}
 
 > Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
-react to this prompt to join our impromptu networking session. (liberating-structures, impromptu-networking)
+react to this prompt with a Slack emoji to join our impromptu networking session. (liberating-structures, impromptu-networking)
 `});
 
 ImpromptuNetworkingWorkflow.addStep(
