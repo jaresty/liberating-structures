@@ -42,25 +42,12 @@ export const ImpromptuNetworkingNotificationDefinition = DefineFunction({
 export default SlackFunction(
   ImpromptuNetworkingNotificationDefinition,
   ({ inputs }) => {
-    let whenPromptWillBeSent = `I will send it to the channel in *${inputs.delay} minute(s)*.`
+    let whenPromptWillBeSent = `in *${inputs.delay} minute(s)*.`
     if (inputs.delay === 0) {
-      whenPromptWillBeSent = "I am sending it to the channel now."
+      whenPromptWillBeSent = "to the channel now."
     }
     const prompt = `:knot::knot::knot::knot::knot:
-A prompt for impromptu networking was just submitted. ${whenPromptWillBeSent}
-
-_Use a slack emoji to react_ to the message I send,
-_within ${inputs.reaction_time} minutes_
-to join in the impromptu networking activity.
-
-The activity works like this:
-
-1. I will post the prompt.
-2. Interested users can react to that message. (not this one)
-3. When time is up, I will put participants into pairs to huddle and discuss for a five minute huddle.
-4. When time is up, I will put participants into pairs again to huddle and discuss for another five minute huddle.
-5. That's it!
-
+A prompt for impromptu networking will be sent ${whenPromptWillBeSent}. Use a slack emoji to react to the prompt to join the activity within a set time limit. Interested users will be paired for two five minute discussions.
 :hourglass: :hourglass: :hourglass: :hourglass: :hourglass:
 `
 

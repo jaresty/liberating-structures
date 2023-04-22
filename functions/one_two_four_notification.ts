@@ -42,25 +42,17 @@ export const OneTwoFourNotificationDefinition = DefineFunction({
 export default SlackFunction(
   OneTwoFourNotificationDefinition,
   ({ inputs }) => {
-    let whenPromptWillBeSent = `I will send it to the channel in *${inputs.delay} minute(s)*.`
+    let whenPromptWillBeSent = `to the channel in *${inputs.delay} minute(s)*.`
     if (inputs.delay === 0) {
-      whenPromptWillBeSent = "I am sending it to the channel now."
+      whenPromptWillBeSent = "to the channel now."
     }
     const prompt = `:one::two::four:
-A prompt for a one-two-four-all activity was just submitted. ${whenPromptWillBeSent}
 
-_Use a slack emoji to react_ to the message I will send,
-_within ${inputs.reaction_time} minutes_
-to join in a one-two-four synchronous discussion; or, follow up in the thread afterwards.
-
-The activity works like this:
-
-1. I will post a prompt here.
-2. Interested users can react to the prompt. (not this message)
-3. When time is up, I will put participants into pairs to huddle and discuss.
-4. After two minutes, I will put participants into groups of four or less to put together their ideas.
-5. After four minutes, I will ask all participants to huddle in a thread to discuss outcomes from each group.
-6. After five minutes, I will send a message to the thread to jot down notes from the discussion so folks who could not participate synchronously can follow up later.
+A one-two-four-all activity will be posted ${whenPromptWillBeSent}. This activity involves Slack \
+huddles in pairs, in small groups, and in the thread. React with a slack emoji within the time \
+limit to join the synchronous discussion or follow up later. Participants will \
+discuss and share ideas in huddles and then in a thread, with notes sent after \
+the activity.
 
 :hourglass: :hourglass: :hourglass: :hourglass: :hourglass:
 `
