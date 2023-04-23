@@ -54,7 +54,7 @@ limit to join the synchronous discussion or follow up later. Participants will \
 discuss and share ideas in huddles and then in a thread, with notes sent after \
 the activity.
 
-:hourglass: :hourglass: :hourglass: :hourglass: :hourglass:
+<https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `
     return { outputs: { prompt } };
   },
