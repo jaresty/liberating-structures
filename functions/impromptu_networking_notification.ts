@@ -42,9 +42,11 @@ export const ImpromptuNetworkingNotificationDefinition = DefineFunction({
 export default SlackFunction(
   ImpromptuNetworkingNotificationDefinition,
   ({ inputs }) => {
-    let whenPromptWillBeSent = `in *${inputs.delay} minute(s)*.`
+    const postTime = Date.now() + 60000 * inputs.delay
+    const timeView = ` at <!date^${Math.floor(postTime/1000)}^{time_secs}|${new Date(postTime)}>`
+    let whenPromptWillBeSent = `in *${inputs.delay} minute(s)*${timeView}`
     if (inputs.delay === 0) {
-      whenPromptWillBeSent = "to the channel now."
+      whenPromptWillBeSent = "to the channel now"
     }
     const prompt = `:knot::knot::knot::knot::knot:
 A prompt for impromptu networking will be sent ${whenPromptWillBeSent}. Use a slack emoji to react to the prompt to join the activity within a set time limit. Interested users will be paired for two five minute discussions.

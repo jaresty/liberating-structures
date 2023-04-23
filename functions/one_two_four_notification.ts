@@ -42,9 +42,11 @@ export const OneTwoFourNotificationDefinition = DefineFunction({
 export default SlackFunction(
   OneTwoFourNotificationDefinition,
   ({ inputs }) => {
-    let whenPromptWillBeSent = `to the channel in *${inputs.delay} minute(s)*.`
+    const postTime = Date.now() + 60000 * inputs.delay
+    const timeView = ` at <!date^${Math.floor(postTime/1000)}^{time_secs}|${new Date(postTime)}>`
+    let whenPromptWillBeSent = `to the channel in *${inputs.delay} minute(s)*${timeView}`
     if (inputs.delay === 0) {
-      whenPromptWillBeSent = "to the channel now."
+      whenPromptWillBeSent = "to the channel now"
     }
     const prompt = `:one::two::four:
 
