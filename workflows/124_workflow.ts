@@ -4,6 +4,7 @@ import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_hudd
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 import { OneTwoFourNotificationDefinition } from "../functions/one_two_four_notification.ts";
+import { UpdateMessageDefinition } from "../functions/update_message_function.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -119,6 +120,15 @@ OneTwoFourWorkflow.addStep(
     message_ts: sendIntroductoryMessageStep.outputs.message_context.message_ts
   },
 );
+
+OneTwoFourWorkflow.addStep(
+  UpdateMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: sendMessageStep.outputs.message_context.message_ts,
+    text: inputForm.outputs.fields.prompt
+  }
+)
 
 OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,

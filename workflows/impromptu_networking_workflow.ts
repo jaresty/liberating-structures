@@ -3,6 +3,7 @@ import { GetReactorsDefinition } from "../functions/get_reactors.ts";
 import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
+import { UpdateMessageDefinition } from "../functions/update_message_function.ts";
 import { ImpromptuNetworkingNotificationDefinition } from "../functions/impromptu_networking_notification.ts";
 
 /**
@@ -116,6 +117,15 @@ ImpromptuNetworkingWorkflow.addStep(
     message_ts: sendIntroductoryMessageStep.outputs.message_context.message_ts
   },
 );
+
+ImpromptuNetworkingWorkflow.addStep(
+  UpdateMessageDefinition,
+  {
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    message_ts: sendMessageStep.outputs.message_context.message_ts,
+    text: inputForm.outputs.fields.prompt
+  }
+)
 
 ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
