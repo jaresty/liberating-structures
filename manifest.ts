@@ -5,6 +5,7 @@ import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
 import { DeleteMessageDefinition } from "./functions/delete_message_function.ts";
 import { UpdateMessageDefinition } from "./functions/update_message_function.ts";
+import WatercoolerWorkflow from "./workflows/watercooler_workflow.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -16,7 +17,7 @@ export default Manifest({
   description:
     "Enable everyone to speak! A bot to facilitate inclusive community-driven discussions for groups of 4+.",
   icon: "assets/kitty.png",
-  workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow],
+  workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow, WatercoolerWorkflow],
   functions: [
     GetReactorsDefinition,
     DeleteMessageDefinition,
