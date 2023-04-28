@@ -59,7 +59,8 @@ const sendMessageStep = WatercoolerWorkflow.addStep(Schema.slack.functions.SendM
 WatercoolerWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: WatercoolerWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
-    message: "Please use the action menu at the top right of the thread to 'Start Huddle in Thread' and wait to see who joins you.",
+    message: `Please use the action menu at the top right of the thread to 'Start Huddle in Thread' and wait to see who joins you. \
+If your huddle grows to size 4+, you might want to kick off a 1-2-4 or impromptu networking to break out with the group.`,
 });
 
 export default WatercoolerWorkflow;
