@@ -98,12 +98,11 @@ ImpromptuNetworkingWorkflow.addStep(
 const attributedPrompt = `From <@${ImpromptuNetworkingWorkflow.inputs.interactivity.interactor.id}>: ${inputForm.outputs.fields.prompt}`
 const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-  message: `${attributedPrompt}
+  message: `:knot::knot::knot: ${attributedPrompt}
 
 > Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
 react to this prompt with a Slack emoji to join our impromptu networking session. (liberating-structures, impromptu-networking)
 
-:knot::knot::knot::knot::knot:
 <https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `});
 
