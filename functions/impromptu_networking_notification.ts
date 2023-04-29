@@ -50,8 +50,6 @@ export default SlackFunction(
     }
     const prompt = `:knot::knot::knot::knot::knot:
 A prompt for impromptu networking will be sent ${whenPromptWillBeSent}. Use a slack emoji to react to the prompt to join the activity within a set time limit. Interested users will be paired for two five minute discussions.
-
-<https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `
 
     return { outputs: { prompt } };

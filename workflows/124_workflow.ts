@@ -104,6 +104,9 @@ const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMe
 > Within the next *${inputForm.outputs.fields.reaction_time} minute(s)*, \
 react to this message with a Slack emoji to join in this one-two-four activity; \
 or, follow up in the thread afterwards. (liberating-structures, one-two-four)"
+
+:one::two::four:
+<https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `
 });
 
@@ -131,10 +134,13 @@ OneTwoFourWorkflow.addStep(
   }
 )
 
-OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+const firstReply = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
-    message: "1-2-4-All Exercise has begun. If you missed the the opportunity to react this time - please join in the text discussion in the thread or feel free to post this prompt again.",
+    message: `1-2-4-All Exercise has begun. \
+If you missed the the opportunity to react this time - \
+please join in the text discussion in the thread or feel free to post this prompt again. \
+Participants - please any takeaways in this thread as you go.`,
 });
 
 const getReactorsStep = OneTwoFourWorkflow.addStep(
@@ -187,7 +193,7 @@ OneTwoFourWorkflow.addStep(
     }
 )
 
-OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+const allBreakoutMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
     message: `Small group breakouts complete. Please start a huddle in the thread now by selecting the action under from the thread context menu above the thread. \
@@ -201,11 +207,21 @@ OneTwoFourWorkflow.addStep(
     }
 )
 
-
-OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+OneTwoFourWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    message_context: sendMessageStep.outputs.message_context,
-    message: "1-2-4 Exercise Complete.  Please share any takeaways here.",
-});
+    message_ts: allBreakoutMessage.outputs.message_context.message_ts
+  },
+);
+
+OneTwoFourWorkflow.addStep(
+  UpdateMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: firstReply.outputs.message_context.message_ts,
+    text:  "1-2-4 Exercise Complete.  Please share any takeaways here."
+  }
+)
 
 export default OneTwoFourWorkflow;

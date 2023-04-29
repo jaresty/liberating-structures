@@ -35,7 +35,8 @@ export default SlackFunction(
             channel: inputs.channel_id,
             ts: inputs.message_ts,
             text: inputs.text,
-            blocks: []
+            blocks: [],
+            attachments: []
         });
         console.log('update', result)
         return { outputs: {} };
