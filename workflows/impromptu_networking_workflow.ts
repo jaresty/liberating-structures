@@ -40,7 +40,7 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
     interactivity: ImpromptuNetworkingWorkflow.inputs.interactivity,
     submit_label: "Start Networking",
     description: "Start an Impromptu Networking session. All users who react with a slack emoji to this prompt will be grouped" +
-      " into pairs at random and given 5 minutes to discuss; pairs will be swapped 2 times.  The practice is based on the " +
+      " into pairs at random and given 5 minutes to discuss.  The practice is based on the " +
       "liberating structures 'Impromptu Networking' exercise defined at https://www.liberatingstructures.com/2-impromptu-networking/",
     fields: {
       elements: [
@@ -72,7 +72,7 @@ const inputForm = ImpromptuNetworkingWorkflow.addStep(
   },
 );
 
-const rounds = 2;
+const rounds = 1;
 
 const prepareIntroductoryMessage = ImpromptuNetworkingWorkflow.addStep(
   ImpromptuNetworkingNotificationDefinition,
@@ -102,7 +102,6 @@ const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functio
 
 > Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
 react to this prompt with a Slack emoji to join our impromptu networking session. (liberating-structures, impromptu-networking)
-
 <https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `});
 
