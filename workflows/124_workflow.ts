@@ -220,7 +220,7 @@ OneTwoFourWorkflow.addStep(
   {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_ts: firstReply.outputs.message_context.message_ts,
-    text:  "1-2-4 Exercise Complete.  Please share any takeaways here."
+    text:  "1-2-4 Exercise Complete.  Please share any takeaways here, respond to the prompt asynchronously, or start this activity over by submitting it again."
   }
 )
 
