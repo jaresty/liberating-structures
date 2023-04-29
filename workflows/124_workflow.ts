@@ -100,12 +100,11 @@ OneTwoFourWorkflow.addStep(
 const attributedPrompt = `From <@${OneTwoFourWorkflow.inputs.interactivity.interactor.id}>: ${inputForm.outputs.fields.prompt}`
 const sendMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
-  message: `${attributedPrompt}
+  message: `:one::two::four: ${attributedPrompt}
 > Within the next *${inputForm.outputs.fields.reaction_time} minute(s)*, \
 react to this message with a Slack emoji to join in this one-two-four activity; \
 or, follow up in the thread afterwards. (liberating-structures, one-two-four)"
 
-:one::two::four:
 <https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `
 });
