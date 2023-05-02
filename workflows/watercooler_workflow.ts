@@ -50,13 +50,14 @@ const inputForm = WatercoolerWorkflow.addStep(
   },
 );
 
-const attributedPrompt = `From <@${WatercoolerWorkflow.inputs.interactivity.interactor.id}>: ${inputForm.outputs.fields.prompt}`
+const attributedPrompt = `> ${inputForm.outputs.fields.prompt}
+- <@${WatercoolerWorkflow.inputs.interactivity.interactor.id}>`
 const sendMessageStep = WatercoolerWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: WatercoolerWorkflow.inputs.channel_id,
-  message: `:droplet::droplet::droplet::droplet::droplet:
+  message: `${attributedPrompt}
+:droplet::droplet::droplet::droplet::droplet:
 Virtual Watercooler
-
-${attributedPrompt}`,
+`,
 });
 
 WatercoolerWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
