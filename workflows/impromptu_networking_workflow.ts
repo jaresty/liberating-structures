@@ -100,6 +100,8 @@ const attributedPrompt = `> ${inputForm.outputs.fields.prompt}
 const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
   message: `${attributedPrompt}
+
+
 _Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
 react to this prompt with a Slack emoji to join our impromptu networking session. (liberating-structures, impromptu-networking)_
 :knot::knot::knot:

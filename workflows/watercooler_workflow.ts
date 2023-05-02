@@ -55,6 +55,8 @@ const attributedPrompt = `> ${inputForm.outputs.fields.prompt}
 const sendMessageStep = WatercoolerWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: WatercoolerWorkflow.inputs.channel_id,
   message: `${attributedPrompt}
+
+
 :droplet::droplet::droplet::droplet::droplet:
 Virtual Watercooler
 `,

@@ -58,8 +58,11 @@ export default SlackFunction(
                 userSet.add(user);
             }
         }
-        const users = Array.from(userSet);
+        let users = Array.from(userSet);
         console.log(users);
+        if(users.length == 1) {
+            users = []; // no point in networking if only one respondent
+        }
         return { outputs: { users } };
     },
 );
