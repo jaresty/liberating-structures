@@ -4,6 +4,7 @@ import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_hudd
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 import { UpdateMessageDefinition } from "../functions/update_message_function.ts";
+import { SendMessageIfDelayedDefinition } from "../functions/send_message_if_delayed.ts";
 import { ImpromptuNetworkingNotificationDefinition } from "../functions/impromptu_networking_notification.ts";
 
 /**
@@ -83,10 +84,14 @@ const prepareIntroductoryMessage = ImpromptuNetworkingWorkflow.addStep(
   },
 );
 
-const sendIntroductoryMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-  message: prepareIntroductoryMessage.outputs.prompt,
-});
+const sendIntroductoryMessageStep = ImpromptuNetworkingWorkflow.addStep(
+  SendMessageIfDelayedDefinition,
+  {
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    message: prepareIntroductoryMessage.outputs.prompt,
+    delay: inputForm.outputs.fields.delay,
+  }
+);
 
 ImpromptuNetworkingWorkflow.addStep(
     Schema.slack.functions.Delay,
@@ -105,7 +110,6 @@ const sendMessageStep = ImpromptuNetworkingWorkflow.addStep(Schema.slack.functio
 _Within * ${inputForm.outputs.fields.reaction_time} minute(s)* \
 react to this prompt with a Slack emoji to join our impromptu networking session. (liberating-structures, impromptu-networking)_
 :knot::knot::knot:
-<https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `});
 
 ImpromptuNetworkingWorkflow.addStep(
@@ -119,7 +123,7 @@ ImpromptuNetworkingWorkflow.addStep(
   DeleteMessageDefinition,
   {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
-    message_ts: sendIntroductoryMessageStep.outputs.message_context.message_ts
+    message_ts: sendIntroductoryMessageStep.outputs.ts
   },
 );
 

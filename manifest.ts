@@ -5,6 +5,7 @@ import OneTwoFourWorkflow from "./workflows/124_workflow.ts";
 import ImpromptuNetworkingWorkflow from "./workflows/impromptu_networking_workflow.ts";
 import { DeleteMessageDefinition } from "./functions/delete_message_function.ts";
 import { UpdateMessageDefinition } from "./functions/update_message_function.ts";
+import { SendMessageIfDelayedDefinition } from "./functions/send_message_if_delayed.ts";
 import WatercoolerWorkflow from "./workflows/watercooler_workflow.ts";
 
 /**
@@ -22,6 +23,7 @@ export default Manifest({
     GetReactorsDefinition,
     DeleteMessageDefinition,
     UpdateMessageDefinition,
+    SendMessageIfDelayedDefinition,
     ImpromptuNetworkingNotificationDefinition,
   ],
   outgoingDomains: [],

@@ -28,6 +28,9 @@ export const DeleteMessageDefinition = DefineFunction({
 export default SlackFunction(
     DeleteMessageDefinition,
     async ({ inputs, client }) => {
+        if(inputs.message_ts == "-1") {
+            return { outputs: {} };
+        }
         await client.chat.delete({
             channel: inputs.channel_id,
             ts: inputs.message_ts,

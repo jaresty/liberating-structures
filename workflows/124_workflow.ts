@@ -5,6 +5,7 @@ import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 import { OneTwoFourNotificationDefinition } from "../functions/one_two_four_notification.ts";
 import { UpdateMessageDefinition } from "../functions/update_message_function.ts";
+import { SendMessageIfDelayedDefinition } from "../functions/send_message_if_delayed.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -85,10 +86,14 @@ const prepareIntroductoryMessage = OneTwoFourWorkflow.addStep(
   },
 );
 
-const sendIntroductoryMessageStep = OneTwoFourWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: OneTwoFourWorkflow.inputs.channel_id,
-  message: prepareIntroductoryMessage.outputs.prompt,
-});
+const sendIntroductoryMessageStep = OneTwoFourWorkflow.addStep(
+  SendMessageIfDelayedDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message: prepareIntroductoryMessage.outputs.prompt,
+    delay: inputForm.outputs.fields.delay,
+  }
+);
 
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
@@ -108,7 +113,6 @@ _Within the next *${inputForm.outputs.fields.reaction_time} minute(s)*, \
 react to this message with a Slack emoji to join in this one-two-four activity; \
 or, follow up in the thread afterwards. (liberating-structures, one-two-four)_"
 :one::two::four: 
-<https://raw.githubusercontent.com/jaresty/liberating-structures/main/assets/reaction-demo.gif|demo>
 `
 });
 
@@ -123,7 +127,7 @@ OneTwoFourWorkflow.addStep(
   DeleteMessageDefinition,
   {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    message_ts: sendIntroductoryMessageStep.outputs.message_context.message_ts
+    message_ts: sendIntroductoryMessageStep.outputs.ts
   },
 );
 
