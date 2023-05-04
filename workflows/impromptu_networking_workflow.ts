@@ -158,8 +158,9 @@ for(let i=0;i < rounds; i++) {
     InviteUsersToHuddleDefinition, {
     channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
     matches: matchUsers.outputs.matches,
-    prompt: inputForm.outputs.fields.prompt,
-    instructions: "In each round, 2 minutes per person to answer the questions. 5 min. per round"
+    instructions: `> ${inputForm.outputs.fields.prompt}
+
+_In each round, 2 minutes per person to answer the questions. 5 min. per round_`
   })
 
     if(i+1 < rounds) {

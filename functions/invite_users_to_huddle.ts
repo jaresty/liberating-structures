@@ -17,15 +17,11 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
                 items: {
                     type: Schema.slack.types.user_id,
                 },
-                description: "groupings of users to match in a huddle",
-            },
-            prompt: {
-                type: Schema.types.string,
-                description: "Prompt to send",
+                description: "groupings of users to send a message to",
             },
             instructions: {
                 type: Schema.types.string,
-                description: "Additional instructions for this invitation",
+                description: "instructions for this message",
             }
         },
         required: ["matches", "channel_id"],
@@ -47,9 +43,9 @@ export default SlackFunction(
             const conversationId = conversation.channel.id;
             client.chat.postMessage({
                 channel: conversationId,
-                text: inputs.prompt + "\n\n" +
-                    "> Hey there! You are invited to join this huddle to discuss." +
-                    "\n\n_" + inputs.instructions + "_"
+                text: `> ${inputs.prompt}
+
+_${inputs.instructions}_`
             });
         }));
         return { outputs: { prompt } };

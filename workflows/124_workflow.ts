@@ -169,8 +169,9 @@ OneTwoFourWorkflow.addStep(
   InviteUsersToHuddleDefinition, {
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
   matches: pairUsers.outputs.matches,
-  prompt: inputForm.outputs.fields.prompt,
-  instructions: "Generate ideas in pairs, building on ideas from self-reflection. 2 min"
+  instructions: `${inputForm.outputs.fields.prompt}
+
+_Hey there! You are invited to join this huddle to discuss. Generate ideas in pairs, building on ideas from self-reflection. 2 min_`
 })
 
 OneTwoFourWorkflow.addStep(
@@ -188,8 +189,9 @@ OneTwoFourWorkflow.addStep(
   InviteUsersToHuddleDefinition, {
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
   matches: groupUsers.outputs.matches,
-  prompt: inputForm.outputs.fields.prompt,
-  instructions: "Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min."
+  instructions: `${inputForm.outputs.fields.prompt}
+
+_Hey there! You are invited to join this huddle to discuss. Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min._`
 })
 
 OneTwoFourWorkflow.addStep(
