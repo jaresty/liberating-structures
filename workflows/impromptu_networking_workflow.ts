@@ -162,14 +162,18 @@ for(let i=0;i < rounds; i++) {
 _In each round, 2 minutes per person to answer the questions. 5 min. per round_`
   })
 
-    if(i+1 < rounds) {
-        ImpromptuNetworkingWorkflow.addStep(
-            Schema.slack.functions.Delay,
-            {
-                minutes_to_delay: 5,
-            }
-        )
+  ImpromptuNetworkingWorkflow.addStep(
+    Schema.slack.functions.Delay,
+    {
+      minutes_to_delay: 5,
     }
+  )
+
+  ImpromptuNetworkingWorkflow.addStep(
+    SendMessageToGroupsDefinition, {
+    matches: matchUsers.outputs.matches,
+    instructions: `Networking complete. Thank you for participating!`
+  })
 }
 
 
