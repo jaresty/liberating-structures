@@ -172,7 +172,7 @@ _In each round, 2 minutes per person to answer the questions. 5 min. per round_`
   ImpromptuNetworkingWorkflow.addStep(
     SendMessageToGroupsDefinition, {
     matches: matchUsers.outputs.matches,
-    instructions: `Networking complete. Thank you for participating!`
+    instructions: `_Networking complete. Thank you for participating!_`
   })
 }
 

@@ -183,7 +183,7 @@ OneTwoFourWorkflow.addStep(
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: pairUsers.outputs.matches,
-  instructions: `Pair discussions complete. Look for an invitation to a small group huddle.`
+  instructions: `_Pair discussions complete. Look for an invitation to a small group huddle._`
 })
 
 const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
@@ -208,7 +208,7 @@ OneTwoFourWorkflow.addStep(
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: groupUsers.outputs.matches,
-  instructions: `Small group discussions complete. Please return to the original channel to start a huddle in the thread there.`
+  instructions: `_Small group discussions complete. Please return to the original channel to start a huddle in the thread there._`
 })
 
 const allBreakoutMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
