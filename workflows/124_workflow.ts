@@ -1,6 +1,6 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
-import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
+import { SendMessageToGroupsDefinition } from "../functions/send_message_to_groups.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 import { OneTwoFourNotificationDefinition } from "../functions/one_two_four_notification.ts";
@@ -166,10 +166,9 @@ const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 })
 
 OneTwoFourWorkflow.addStep(
-  InviteUsersToHuddleDefinition, {
-  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  SendMessageToGroupsDefinition, {
   matches: pairUsers.outputs.matches,
-  instructions: `${inputForm.outputs.fields.prompt}
+  instructions: `> ${inputForm.outputs.fields.prompt}
 
 _Hey there! You are invited to join this huddle to discuss. Generate ideas in pairs, building on ideas from self-reflection. 2 min_`
 })
@@ -186,10 +185,9 @@ const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 })
 
 OneTwoFourWorkflow.addStep(
-  InviteUsersToHuddleDefinition, {
-  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  SendMessageToGroupsDefinition, {
   matches: groupUsers.outputs.matches,
-  instructions: `${inputForm.outputs.fields.prompt}
+  instructions: `> ${inputForm.outputs.fields.prompt}
 
 _Hey there! You are invited to join this huddle to discuss. Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min._`
 })

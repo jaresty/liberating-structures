@@ -1,6 +1,6 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { GetReactorsDefinition } from "../functions/get_reactors.ts";
-import { InviteUsersToHuddleDefinition } from "../functions/invite_users_to_huddle.ts";
+import { SendMessageToGroupsDefinition } from "../functions/send_message_to_groups.ts";
 import { MatchUsersDefinition } from "../functions/match_users.ts";
 import { DeleteMessageDefinition } from "../functions/delete_message_function.ts";
 import { UpdateMessageDefinition } from "../functions/update_message_function.ts";
@@ -155,8 +155,7 @@ for(let i=0;i < rounds; i++) {
     })
 
   ImpromptuNetworkingWorkflow.addStep(
-    InviteUsersToHuddleDefinition, {
-    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    SendMessageToGroupsDefinition, {
     matches: matchUsers.outputs.matches,
     instructions: `> ${inputForm.outputs.fields.prompt}
 

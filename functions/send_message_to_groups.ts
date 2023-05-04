@@ -1,17 +1,13 @@
 
 import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
 
-export const InviteUsersToHuddleDefinition = DefineFunction({
-    callback_id: "invite_users_to_huddle",
-    title: "Invite Users to Huddle",
-    description: "invite grouped users to huddles",
-    source_file: "functions/invite_users_to_huddle.ts",
+export const SendMessageToGroupsDefinition = DefineFunction({
+    callback_id: "send_message_to_groups_of_users",
+    title: "Send message to groups of users",
+    description: "send message to groups of users",
+    source_file: "functions/send_message_to_groups.ts",
     input_parameters: {
         properties: {
-            channel_id: {
-                type: Schema.slack.types.channel_id,
-                description: "the channel to invite in"
-            },
             matches: {
                 type: Schema.types.array,
                 items: {
@@ -24,7 +20,7 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
                 description: "instructions for this message",
             }
         },
-        required: ["matches", "channel_id"],
+        required: ["matches", "instructions"],
     },
     output_parameters: {
         properties: {},
@@ -33,7 +29,7 @@ export const InviteUsersToHuddleDefinition = DefineFunction({
 })
 
 export default SlackFunction(
-    InviteUsersToHuddleDefinition,
+    SendMessageToGroupsDefinition,
     async ({ inputs, client }) => {
         await Promise.all(inputs.matches.map(async (userIds: string) => {
             const conversation = await client.conversations.open({
@@ -43,9 +39,7 @@ export default SlackFunction(
             const conversationId = conversation.channel.id;
             client.chat.postMessage({
                 channel: conversationId,
-                text: `> ${inputs.prompt}
-
-_${inputs.instructions}_`
+                text: inputs.instructions,
             });
         }));
         return { outputs: { prompt } };

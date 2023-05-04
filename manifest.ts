@@ -7,6 +7,7 @@ import { DeleteMessageDefinition } from "./functions/delete_message_function.ts"
 import { UpdateMessageDefinition } from "./functions/update_message_function.ts";
 import { SendMessageIfDelayedDefinition } from "./functions/send_message_if_delayed.ts";
 import WatercoolerWorkflow from "./workflows/watercooler_workflow.ts";
+import { SendMessageToGroupsDefinition } from "./functions/send_message_to_groups.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -23,6 +24,7 @@ export default Manifest({
     GetReactorsDefinition,
     DeleteMessageDefinition,
     UpdateMessageDefinition,
+    SendMessageToGroupsDefinition,
     SendMessageIfDelayedDefinition,
     ImpromptuNetworkingNotificationDefinition,
   ],
