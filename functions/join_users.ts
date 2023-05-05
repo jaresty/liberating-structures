@@ -3,7 +3,7 @@ import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
 export const JoinUsersDefinition = DefineFunction({
     callback_id: "join_users",
     title: "Join Users",
-    description: "form a random grouping of users",
+    description: "join an array of user ids into a comma-separated string",
     source_file: "functions/join_users.ts",
     input_parameters: {
         properties: {
