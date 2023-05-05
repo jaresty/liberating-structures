@@ -6,16 +6,16 @@ import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
  * be used independently or as steps in Workflows.
  * https://api.slack.com/future/functions/custom
  */
-export const ImpromptuNetworkingNotificationDefinition = DefineFunction({
-  callback_id: "impromptu_networking_notification",
-  title: "Impromptu Networking Notification",
-  description: "Impromptu Networking Notification",
-  source_file: "functions/impromptu_networking_notification.ts",
+export const ImpromptuWorkshopNotificationDefinition = DefineFunction({
+  callback_id: "impromptu_workshop_notification",
+  title: "Impromptu Workshop Notification",
+  description: "Impromptu Workshop Notification",
+  source_file: "functions/impromptu_workshop_notification.ts",
   input_parameters: {
     properties: {
       prompt: {
         type: Schema.types.string,
-        description: "Prompt for impromptu networking",
+        description: "Prompt for impromptu workshop",
       },
       delay: {
         type: Schema.types.number,
@@ -32,7 +32,7 @@ export const ImpromptuNetworkingNotificationDefinition = DefineFunction({
     properties: {
       prompt: {
         type: Schema.types.string,
-        description: "impromptu networking notification",
+        description: "networking workshop notification",
       },
     },
     required: ["prompt"],
@@ -40,7 +40,7 @@ export const ImpromptuNetworkingNotificationDefinition = DefineFunction({
 });
 
 export default SlackFunction(
-  ImpromptuNetworkingNotificationDefinition,
+  ImpromptuWorkshopNotificationDefinition,
   ({ inputs }) => {
     const postTime = Date.now() + 60000 * inputs.delay
     const timeView = ` at <!date^${Math.floor(postTime/1000)}^{time_secs}|${new Date(postTime)}>`
@@ -48,10 +48,9 @@ export default SlackFunction(
     if (inputs.delay === 0) {
       whenPromptWillBeSent = "to the channel now"
     }
-    const prompt = `:knot::knot::knot::knot::knot:
-A prompt for impromptu networking will be sent ${whenPromptWillBeSent}. \
+    const prompt = `A prompt for impromptu workshop will be sent ${whenPromptWillBeSent}. \
 Use a slack emoji to react to the prompt to join the activity within a set time limit. \
-Interested users will be paired for one five minute discussion.
+Interested users will be invited to join in the workshop in a slack huddle.
 `
 
     return { outputs: { prompt } };

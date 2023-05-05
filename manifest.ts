@@ -8,6 +8,8 @@ import { UpdateMessageDefinition } from "./functions/update_message_function.ts"
 import { SendMessageIfDelayedDefinition } from "./functions/send_message_if_delayed.ts";
 import WatercoolerWorkflow from "./workflows/watercooler_workflow.ts";
 import { SendMessageToGroupsDefinition } from "./functions/send_message_to_groups.ts";
+import ImpromptuWorkshopWorkflow from "./workflows/impromptu_workshop_workflow.ts";
+import { JoinUsersDefinition } from "./functions/join_users.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -19,13 +21,14 @@ export default Manifest({
   description:
     "Enable everyone to speak! A bot to facilitate inclusive community-driven discussions for groups of 4+.",
   icon: "assets/kitty.png",
-  workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow, WatercoolerWorkflow],
+  workflows: [ImpromptuNetworkingWorkflow, OneTwoFourWorkflow, WatercoolerWorkflow, ImpromptuWorkshopWorkflow],
   functions: [
     GetReactorsDefinition,
     DeleteMessageDefinition,
     UpdateMessageDefinition,
     SendMessageToGroupsDefinition,
     SendMessageIfDelayedDefinition,
+    JoinUsersDefinition,
     ImpromptuNetworkingNotificationDefinition,
   ],
   outgoingDomains: [],
