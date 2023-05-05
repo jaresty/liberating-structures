@@ -11,7 +11,7 @@ export const SendMessageToGroupsDefinition = DefineFunction({
             matches: {
                 type: Schema.types.array,
                 items: {
-                    type: Schema.slack.types.user_id,
+                    type: Schema.types.string,
                 },
                 description: "groupings of users to send a message to",
             },
