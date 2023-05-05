@@ -28,7 +28,7 @@ export const SendMessageToGroupsDefinition = DefineFunction({
                 description: "the timestamp of the original message"
             },
         },
-        required: ["matches", "instructions"],
+        required: ["matches", "instructions", "channel_id", "message_ts"],
     },
     output_parameters: {
         properties: {},
