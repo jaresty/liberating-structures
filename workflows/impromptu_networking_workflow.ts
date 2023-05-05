@@ -157,6 +157,8 @@ for(let i=0;i < rounds; i++) {
   ImpromptuNetworkingWorkflow.addStep(
     SendMessageToGroupsDefinition, {
     matches: matchUsers.outputs.matches,
+    channel_id: ImpromptuNetworkingWorkflow.inputs.channel_id,
+    message_ts: sendMessageStep.outputs.message_context.message_ts,
     instructions: `> ${inputForm.outputs.fields.prompt}
 
 _In each round, 2 minutes per person to answer the questions. 5 min. per round_`

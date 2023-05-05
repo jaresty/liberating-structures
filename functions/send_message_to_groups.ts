@@ -18,7 +18,15 @@ export const SendMessageToGroupsDefinition = DefineFunction({
             instructions: {
                 type: Schema.types.string,
                 description: "instructions for this message",
-            }
+            },
+            channel_id: {
+                type: Schema.slack.types.channel_id,
+                description: "the channel of the original message"
+            },
+            message_ts: {
+                type: Schema.types.string,
+                description: "the timestamp of the original message"
+            },
         },
         required: ["matches", "instructions"],
     },
@@ -31,10 +39,25 @@ export const SendMessageToGroupsDefinition = DefineFunction({
 export default SlackFunction(
     SendMessageToGroupsDefinition,
     async ({ inputs, client }) => {
+        if(inputs.matches.length == 0) {
+            console.log("no participants");
+            return {outputs: {prompt}}
+        }
         await Promise.all(inputs.matches.map(async (userIds: string) => {
+            console.log('userids', userIds)
             const conversation = await client.conversations.open({
                 users: userIds
             })
+            if(conversation.ok == false) {
+                console.log(conversation);
+                const result = await client.chat.postMessage({
+                    channel: inputs.channel_id,
+                    thread_ts: inputs.message_ts,
+                    text: 'Encountered an error sending huddle invitations.  Please start a huddle in this thread instead.'
+                });
+                console.log(result);
+                return
+            }
             // Get the conversation ID of the huddle
             const conversationId = conversation.channel.id;
             client.chat.postMessage({

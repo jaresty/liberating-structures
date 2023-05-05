@@ -168,6 +168,8 @@ const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: pairUsers.outputs.matches,
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  message_ts: firstReply.outputs.message_context.message_ts,
   instructions: `> ${inputForm.outputs.fields.prompt}
 
 _Hey there! You are invited to join this huddle to discuss. Generate ideas in pairs, building on ideas from self-reflection. 2 min_`
@@ -183,6 +185,8 @@ OneTwoFourWorkflow.addStep(
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: pairUsers.outputs.matches,
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  message_ts: firstReply.outputs.message_context.message_ts,
   instructions: `_Pair discussions complete. Look for an invitation to a small group huddle._`
 })
 
@@ -193,6 +197,8 @@ const groupUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: groupUsers.outputs.matches,
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  message_ts: firstReply.outputs.message_context.message_ts,
   instructions: `> ${inputForm.outputs.fields.prompt}
 
 _Hey there! You are invited to join this huddle to discuss. Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min._`
@@ -207,6 +213,8 @@ OneTwoFourWorkflow.addStep(
 
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
+  channel_id: OneTwoFourWorkflow.inputs.channel_id,
+  message_ts: firstReply.outputs.message_context.message_ts,
   matches: groupUsers.outputs.matches,
   instructions: `_Small group discussions complete. Please return to the original channel to start a huddle in the thread there._`
 })

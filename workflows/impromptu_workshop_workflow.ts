@@ -152,6 +152,8 @@ let joinUsers = ImpromptuWorkshopWorkflow.addStep(JoinUsersDefinition, {
 ImpromptuWorkshopWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: joinUsers.outputs.joined_users,
+  channel_id: ImpromptuWorkshopWorkflow.inputs.channel_id,
+  message_ts: sendMessageStep.outputs.message_context.message_ts,
   instructions: `> ${inputForm.outputs.fields.prompt}
 
 _Please join this huddle to participate in this impromptu workshop_`

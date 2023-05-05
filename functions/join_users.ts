@@ -34,6 +34,10 @@ export const JoinUsersDefinition = DefineFunction({
 export default SlackFunction(
     JoinUsersDefinition,
     ({ inputs }) => {
-        return { outputs: { joined_users: [inputs.users.join(',')] }};
+        if(inputs.users.length == 0) {
+            return { outputs: { joined_users: [] }};
+        }
+        const joined_users = inputs.users.join(',');
+        return { outputs: { joined_users: [joined_users] }};
     },
 );
