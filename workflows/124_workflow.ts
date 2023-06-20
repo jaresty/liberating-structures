@@ -165,6 +165,8 @@ const pairUsers = OneTwoFourWorkflow.addStep(MatchUsersDefinition, {
     users: getReactorsStep.outputs.users,
 })
 
+const userthing = `${getReactorsStep.outputs.users.join(",")}`
+
 OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: pairUsers.outputs.matches,
