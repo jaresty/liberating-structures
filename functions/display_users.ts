@@ -24,7 +24,7 @@ export const DisplayUsersDefinition = DefineFunction({
                 description: "A string of the user IDs to display",
             },
         },
-        required: ["joined_users"],
+        required: ["display_users"],
     }
 })
 
@@ -32,7 +32,7 @@ export default SlackFunction(
     DisplayUsersDefinition,
     ({ inputs }) => {
         if(inputs.users.length == 0) {
-            return { outputs: { joined_users: [] }};
+            return { outputs: { display_users: "" }};
         }
         const display_users = inputs.users.map((user_id) => `<@${user_id}>`).join(',');
         return { outputs: { display_users }};
