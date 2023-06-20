@@ -6,6 +6,7 @@ import { DeleteMessageDefinition } from "../functions/delete_message_function.ts
 import { OneTwoFourNotificationDefinition } from "../functions/one_two_four_notification.ts";
 import { UpdateMessageDefinition } from "../functions/update_message_function.ts";
 import { SendMessageIfDelayedDefinition } from "../functions/send_message_if_delayed.ts";
+import { DisplayUsersDefinition } from "../functions/display_users.ts";
 
 /**
  * A Workflow is a set of steps that are executed in order.
@@ -140,6 +141,22 @@ OneTwoFourWorkflow.addStep(
   }
 )
 
+const getReactorsStep = OneTwoFourWorkflow.addStep(
+    GetReactorsDefinition, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    timestamp: sendMessageStep.outputs.message_context.message_ts,
+});
+
+const displayUsers = OneTwoFourWorkflow.addStep(DisplayUsersDefinition, {
+    users: getReactorsStep.outputs.users,
+})
+
+OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_context: sendMessageStep.outputs.message_context,
+    message: `Participants: ${displayUsers.outputs.display_users}`
+});
+
 const firstReply = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
@@ -147,12 +164,6 @@ const firstReply = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThre
 If you missed the the opportunity to react this time - \
 please join in the text discussion in the thread or feel free to post this prompt again. \
 Participants - please any takeaways in this thread as you go.`,
-});
-
-const getReactorsStep = OneTwoFourWorkflow.addStep(
-    GetReactorsDefinition, {
-    channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    timestamp: sendMessageStep.outputs.message_context.message_ts,
 });
 
 // const getReactorsStep = {
