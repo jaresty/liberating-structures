@@ -186,6 +186,12 @@ OneTwoFourWorkflow.addStep(
 _Hey there! You are invited to join this huddle to discuss. Generate ideas in pairs, building on ideas from self-reflection. 2 min_`
 })
 
+const pairTimeMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_context: sendMessageStep.outputs.message_context,
+    message: `Pair discussions started. These will last 2 minutes. https://timertopia.files.wordpress.com/2017/04/2-minutes.gif`
+});
+
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
@@ -215,6 +221,12 @@ OneTwoFourWorkflow.addStep(
 _Hey there! You are invited to join this huddle to discuss. Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min._`
 })
 
+const smallGroupTimeMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_context: sendMessageStep.outputs.message_context,
+    message: `Small group discussions started. These will last 4 minutes. https://timertopia.files.wordpress.com/2017/04/4-minutes.gif`
+});
+
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
@@ -234,7 +246,7 @@ const allBreakoutMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.Rep
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_context: sendMessageStep.outputs.message_context,
     message: `Small group breakouts complete. Please start a huddle in the thread now by selecting the action under from the thread context menu above the thread. \
-Ask, “What is one idea that stood out in your conversation?” Each group shares one important idea with all. 5 min.`
+Ask, “What is one idea that stood out in your conversation?” Each group shares one important idea with all. 5 min. https://timertopia.files.wordpress.com/2017/04/5-minute.gif`
 });
 
 OneTwoFourWorkflow.addStep(
@@ -248,9 +260,27 @@ OneTwoFourWorkflow.addStep(
   DeleteMessageDefinition,
   {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: pairTimeMessage.outputs.message_context.message_ts
+  },
+);
+
+OneTwoFourWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: smallGroupTimeMessage.outputs.message_context.message_ts
+  },
+);
+
+OneTwoFourWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_ts: allBreakoutMessage.outputs.message_context.message_ts
   },
 );
+
+
 
 OneTwoFourWorkflow.addStep(
   UpdateMessageDefinition,
