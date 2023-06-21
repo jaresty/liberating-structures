@@ -200,6 +200,14 @@ OneTwoFourWorkflow.addStep(
 )
 
 OneTwoFourWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: pairTimeMessage.outputs.message_context.message_ts
+  },
+);
+
+OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   matches: pairUsers.outputs.matches,
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
@@ -235,6 +243,14 @@ OneTwoFourWorkflow.addStep(
 )
 
 OneTwoFourWorkflow.addStep(
+  DeleteMessageDefinition,
+  {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_ts: smallGroupTimeMessage.outputs.message_context.message_ts
+  },
+);
+
+OneTwoFourWorkflow.addStep(
   SendMessageToGroupsDefinition, {
   channel_id: OneTwoFourWorkflow.inputs.channel_id,
   message_ts: firstReply.outputs.message_context.message_ts,
@@ -260,27 +276,9 @@ OneTwoFourWorkflow.addStep(
   DeleteMessageDefinition,
   {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    message_ts: pairTimeMessage.outputs.message_context.message_ts
-  },
-);
-
-OneTwoFourWorkflow.addStep(
-  DeleteMessageDefinition,
-  {
-    channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    message_ts: smallGroupTimeMessage.outputs.message_context.message_ts
-  },
-);
-
-OneTwoFourWorkflow.addStep(
-  DeleteMessageDefinition,
-  {
-    channel_id: OneTwoFourWorkflow.inputs.channel_id,
     message_ts: allBreakoutMessage.outputs.message_context.message_ts
   },
 );
-
-
 
 OneTwoFourWorkflow.addStep(
   UpdateMessageDefinition,
