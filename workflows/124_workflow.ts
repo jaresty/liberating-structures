@@ -183,7 +183,7 @@ OneTwoFourWorkflow.addStep(
   message_ts: firstReply.outputs.message_context.message_ts,
   instructions: `> ${inputForm.outputs.fields.prompt}
 
-_Hey there! You are invited to join this huddle to discuss. Generate ideas in pairs, building on ideas from self-reflection. 2 min_`
+_Hey there! You are invited to join this huddle to discuss. Please leave any existing huddles and click "Join Huddle" to join a huddle with your pair(s). Generate ideas in pairs, building on ideas from self-reflection. 2 min_`
 })
 
 const pairTimeMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
@@ -226,7 +226,7 @@ OneTwoFourWorkflow.addStep(
   message_ts: firstReply.outputs.message_context.message_ts,
   instructions: `> ${inputForm.outputs.fields.prompt}
 
-_Hey there! You are invited to join this huddle to discuss. Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min._`
+_Hey there! You are invited to join this huddle to discuss. Please leave any existing huddles and click "Join Huddle" to join a huddle with your group. Share and develop ideas from your pair in foursomes (notice similarities and differences). 4 min._`
 })
 
 const smallGroupTimeMessage = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {

@@ -161,7 +161,7 @@ for(let i=0;i < rounds; i++) {
     message_ts: sendMessageStep.outputs.message_context.message_ts,
     instructions: `> ${inputForm.outputs.fields.prompt}
 
-_In each round, 2 minutes per person to answer the questions. 5 min. per round_`
+_Please leave any existing huddles and click "Join Huddle" to join a huddle with your partner(s). In each round, 2 minutes per person to answer the questions. 5 min. per round_`
   })
 
   ImpromptuNetworkingWorkflow.addStep(
