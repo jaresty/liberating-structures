@@ -117,6 +117,12 @@ or, follow up in the thread afterwards. (liberating-structures, one-two-four)_"
 `
 });
 
+const firstReply = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+    channel_id: OneTwoFourWorkflow.inputs.channel_id,
+    message_context: sendMessageStep.outputs.message_context,
+    message: `While you wait for the 1-2-4-All Exercise to begin, please answer the prompt on your own in this thread.`,
+});
+
 OneTwoFourWorkflow.addStep(
     Schema.slack.functions.Delay,
     {
@@ -157,14 +163,17 @@ OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
     message: `Participants: ${displayUsers.outputs.display_users}`
 });
 
-const firstReply = OneTwoFourWorkflow.addStep(Schema.slack.functions.ReplyInThread, {
+OneTwoFourWorkflow.addStep(
+  UpdateMessageDefinition,
+  {
     channel_id: OneTwoFourWorkflow.inputs.channel_id,
-    message_context: sendMessageStep.outputs.message_context,
-    message: `1-2-4-All Exercise has begun. \
+    message_ts: firstReply.outputs.message_context.message_ts,
+    text: `1-2-4-All Exercise has begun. \
 If you missed the the opportunity to react this time - \
 please join in the text discussion in the thread or feel free to post this prompt again. \
 Participants - please any takeaways in this thread as you go.`,
-});
+  }
+)
 
 // const getReactorsStep = {
 //   outputs: {
