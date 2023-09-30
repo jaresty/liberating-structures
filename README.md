@@ -41,6 +41,6 @@ This bot aims to replicate the liberating structures defined [here](https://www.
 ## Installation
 
 Installation is really simple:
-1. [Install the slack CLI](https://api.slack.com/automation/cli/install)
+1. [Install the slack CLI](https://api.slack.com/automation/cli/install) and login to your slack workspace.
 2. Run `slack deploy`
 3. For each of the triggers in the `triggers/` folder run `slack trigger create --trigger-def <TRIGGER>` to set up the triggers to launch the workflows in the application. You will get URLs that you can copy and paste anywhere into slack that will turn into buttons that you can click.
