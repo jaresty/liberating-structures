@@ -37,3 +37,9 @@ This structure takes a group of people and pairs them up to discuss a prompt, sw
 ## Sources
 
 This bot aims to replicate the liberating structures defined [here](https://www.liberatingstructures.com/) in slack using forms, threads, huddles, etc to enable serendipitous synchronous conversations in slack.
+
+## Installation
+
+Installation is really simple:
+1. [Install the slack CLI](https://api.slack.com/automation/cli/install)
+2. Run `slack deploy`
