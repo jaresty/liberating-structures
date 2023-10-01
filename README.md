@@ -57,7 +57,7 @@ Welcome to Liberated Paws Bot! This section will help you understand how to get 
 
 ### Customizing Activity Launch
 
-When launching an activity, you can customize settings like delay and reaction time limits, facilitating scheduling and ensuring smooth coordination.
+When launching an activity, you can customize settings like delay and reaction time limits, facilitating scheduling and indicating the time allowed for participants to react and join in activities.
 
 ### Manually Starting Huddles
 
