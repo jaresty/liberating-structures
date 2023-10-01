@@ -44,3 +44,25 @@ Installation is really simple:
 1. [Install the slack CLI](https://api.slack.com/automation/cli/install) and login to your slack workspace.
 2. Run `slack deploy`
 3. For each of the triggers in the `triggers/` folder run `slack trigger create --trigger-def <TRIGGER>` to set up the triggers to launch the workflows in the application. You will get URLs that you can copy and paste anywhere into slack that will turn into buttons that you can click.
+
+## Getting Started with Liberated Paws Bot for Activities
+
+Welcome to Liberated Paws Bot! This section will help you understand how to get started with activities in Slack using our bot.
+
+### Starting and Joining Activities
+
+- To initiate an activity, use the "run workflow" triggers set up during installation, which can be accessed through commands, bookmarks, or buttons that show on workflow URL previews.
+- Activities operate differently based on their type. For instance, the Water Cooler activity starts with a huddle in a thread, while others rely on emoji reactions for interest indication.
+- Most activities allow users to join by reacting with Slack emojis within a specified time limit. In some cases, joining involves participating in a channel huddle.
+
+### Customizing Activity Launch
+
+When launching an activity, you can customize settings like delay and reaction time limits, facilitating scheduling and ensuring smooth coordination.
+
+### Manually Starting Huddles
+
+Users manually start huddles due to the Slack API's current inability to initiate huddles directly.
+
+### Why Slack?
+
+We chose Slack for activities due to its widespread use in remote organizations. It offers easy setup for small group activities and supports asynchronous participation through communication trails.
