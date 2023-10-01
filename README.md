@@ -65,4 +65,4 @@ Users manually start huddles due to the Slack API's current inability to initiat
 
 ### Why Slack?
 
-We chose Slack for activities due to its widespread use in remote organizations. It offers easy setup for small group activities and supports asynchronous participation through communication trails.
+We chose Slack for activities due to its widespread use in remote organizations. It offers easy setup for small group activities and supports asynchronous participation by leaving behind slack threads that can be read and responded to anytime.
