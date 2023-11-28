@@ -113,9 +113,8 @@ const sendMessageStep = ThreeSixTwelveWorkflow.addStep(
 
 
 _Within the next *${inputForm.outputs.fields.reaction_time} minute(s)*, \
-react to this message with a Slack emoji to join in this one-two-four activity; \
-or, follow up in the thread afterwards. (liberating-structures, one-two-four)_"
-:one::two::four: 
+react to this message with a Slack emoji to join in this three-six-twelve activity; \
+or, follow up in the thread afterwards. (liberating-structures)_"
 `,
   },
 );
