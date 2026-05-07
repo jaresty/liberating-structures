@@ -1,8 +1,12 @@
 {
   "apps": {
+    "T024MS10H": {
+      "app_id": "A0B2E18K6RJ",
+      "team_domain": "testdouble",
+      "team_id": "T024MS10H"
+    },
     "TK7M6MUN8": {
       "app_id": "A04J3RNKP0B",
-      "IsDev": false,
       "team_domain": "thisisartium",
       "team_id": "TK7M6MUN8"
     }
